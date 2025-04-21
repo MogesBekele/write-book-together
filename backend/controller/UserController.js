@@ -9,17 +9,15 @@ dotenv.config(); // Load environment variables
 // Register a new user
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
+  console.log('Request Body:', req.body); // Debug log
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('User already exists'); // Debug log
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
     const newUser = new User({
       _id: email,
       name,
@@ -27,13 +25,10 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    // Save the user to the database
     await newUser.save();
+    console.log('New user created:', newUser); // Debug log
 
-    // Generate a token
     const token = generateToken(newUser._id);
-
-    // Send the token and user data in the response
     res.status(201).json({
       token,
       user: {
@@ -47,7 +42,6 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // Login a user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
