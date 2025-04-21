@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import UserRoute from './routes/UserRoute.js';
+
+
 
 dotenv.config(); // Load environment variables
 
@@ -14,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('welcome to the backend');
 });
+
+app.use('/api/user', UserRoute);
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
