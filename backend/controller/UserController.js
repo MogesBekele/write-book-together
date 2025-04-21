@@ -6,7 +6,7 @@ import generateToken from "../utilis/GenerateToken.js";
 dotenv.config(); // Load environment variables
 
 // Register a new user
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     // Check if user already exists
@@ -48,7 +48,7 @@ const registerUser = async (req, res) => {
 };
 
 // Login a user
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     // Find the user by email
@@ -80,3 +80,6 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+// Get user profile
