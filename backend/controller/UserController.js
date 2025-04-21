@@ -81,5 +81,4 @@ export const loginUser = async (req, res) => {
   }
 };
 
-
 // Get user profile
