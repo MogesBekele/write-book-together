@@ -9,25 +9,37 @@ dotenv.config(); // Load environment variables
 // Register a new user
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log('Request Body:', req.body); // Debug log
+
+  // Validate input
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
   try {
+    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      console.log('User already exists'); // Debug log
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash the password
+    const salt = await bcrypt.genSalt(10); // Generate salt
+    const hashedPassword = await bcrypt.hash(password, salt); // Hash the password
+
+    // Create a new user
     const newUser = new User({
       name,
       email,
-      password: hashedPassword,
+      password: hashedPassword, // Save the hashed password
     });
 
     await newUser.save();
-    console.log('New user created:', newUser); // Debug log
+    console.log("New user created:", newUser); // Debug log
 
+    // Generate a token
     const token = generateToken(newUser._id);
+
+    // Send response
     res.status(201).json({
       token,
       user: {
@@ -41,9 +53,16 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 // Login a user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
+
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
+
   try {
     // Find the user by email
     const user = await User.findOne({ email });
@@ -52,7 +71,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Check if the password is correct
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password); // Compare the plain password with the hashed password
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -60,7 +79,7 @@ export const loginUser = async (req, res) => {
     // Generate a token
     const token = generateToken(user._id);
 
-    // Send the token and user data in the response
+    // Send response
     res.status(200).json({
       token,
       user: {
