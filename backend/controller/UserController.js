@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 import dotenv from "dotenv";
 import generateToken from "../utilis/GenerateToken.js";
+import User from "../models/UserModel.js";
 dotenv.config(); // Load environment variables
 
 // Register a new user
@@ -10,7 +11,7 @@ export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     // Check if user already exists
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -19,7 +20,7 @@ export const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const newUser = new UserModel({
+    const newUser = new User({
       _id: email,
       name,
       email,
@@ -52,7 +53,7 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     // Find the user by email
-    const user = await UserModel.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
