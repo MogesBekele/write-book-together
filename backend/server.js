@@ -1,18 +1,20 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
-const app = express() 
+dotenv.config(); // Load environment variables
 
-const PORT = process.env.PORT || 5000
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+const app = express();
 
-app.get('/', (req, res)=>{
-    res.send('welcome to the backend')
-})
+const PORT = process.env.PORT || 5000;
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+    res.send('welcome to the backend');
+});
 
-app.listen((PORT)=>{
-    console.log(`server is running on port ${PORT}`)
-})
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`);
+});
