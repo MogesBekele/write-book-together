@@ -88,9 +88,11 @@ export const loginUser = async (req, res) => {
         isAdmin: user.isAdmin,
       },
     });
+    console.log("User logged in:", user); // Debug log
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Server error" });
+
   }
 };
 
