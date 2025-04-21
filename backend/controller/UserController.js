@@ -1,6 +1,4 @@
-import UserModel from "../models/UserModel.js";
 import bcrypt from "bcrypt";
-
 import dotenv from "dotenv";
 import generateToken from "../utilis/GenerateToken.js";
 import User from "../models/UserModel.js";
@@ -34,8 +32,6 @@ export const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    console.log("New user created:", newUser); // Debug log
-
     // Generate a token
     const token = generateToken(newUser._id);
 
@@ -92,7 +88,6 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Server error" });
-
   }
 };
 
