@@ -1,42 +1,59 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
-        <p className="text-gray-600 mb-4">
-          Welcome to your dashboard! Use the options below to navigate to different sections.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <button
-            onClick={() => navigate("/dashboard/books")}
-            className="bg-blue-600 text-white font-medium py-3 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+    <div className="min-h-screen flex bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-1/4 bg-white shadow-lg p-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h2>
+        <nav className="space-y-4">
+          <NavLink
+            to="books"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-blue-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+            }
           >
             Manage Books
-          </button>
-          <button
-            onClick={() => navigate("/dashboard/collaborate")}
-            className="bg-green-600 text-white font-medium py-3 px-4 rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          </NavLink>
+          <NavLink
+            to="collaborate"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-green-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+            }
           >
             Collaborate
-          </button>
-          <button
-            onClick={() => navigate("/dashboard/profile")}
-            className="bg-purple-600 text-white font-medium py-3 px-4 rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          </NavLink>
+          <NavLink
+            to="profile"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-purple-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+            }
           >
             Profile
-          </button>
-          <button
-            onClick={() => navigate("/dashboard/settings")}
-            className="bg-gray-600 text-white font-medium py-3 px-4 rounded-md shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          </NavLink>
+          <NavLink
+            to="settings"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-gray-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+            }
           >
             Settings
-          </button>
-        </div>
+          </NavLink>
+        </nav>
+      </div>
+
+      {/* Main Content */}
+      <div className="w-3/4 p-6">
+        <Outlet /> {/* This renders the nested routes */}
       </div>
     </div>
   );
