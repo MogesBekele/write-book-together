@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,8 +10,6 @@ const Register = () => {
     password: "",
   });
   const navigate = useNavigate();
-
-  const [message, setMessage] = useState("");
 
   // Handle input changes
   const handleChange = (e) => {
@@ -28,12 +25,12 @@ const Register = () => {
         "http://localhost:4000/api/user/register",
         formData
       );
-      setMessage("Registration successful!");
+
       toast.success("Registration successful!"); // Show success message
       console.log(response.data); // Debug log
       navigate("/login"); // Navigate after successful login
     } catch (error) {
-     toast.error('Registration failed! Please check your details.'); // Show error message
+      toast.error("Registration failed! Please check your details."); // Show error message
     }
   };
 
@@ -99,14 +96,13 @@ const Register = () => {
             />
           </div>
           <button
-        
             type="submit"
             className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Register
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+
         <p className="mt-6 text-center text-gray-600">
           Already have an account?{" "}
           <a href="/login" className="text-blue-500 hover:underline">
