@@ -20,11 +20,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user/login",
+        "http://localhost:4000/api/user/login",
         formData
       );
       setMessage("Login successful!");
       console.log(response.data); // Debug log
+      setFormData({ email: "", password: "" }); // Clear form data after successful login
     } catch (error) {
       setMessage(error.response?.data?.message || "Invalid credentials");
       console.error("Error logging in user:", error);

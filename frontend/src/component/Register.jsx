@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const nagigate = useNavigate();
 
   const [message, setMessage] = useState("");
 
@@ -21,7 +23,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user/register",
+        "http://localhost:4000/api/user/register",
         formData
       );
       setMessage("Registration successful!");
@@ -94,6 +96,7 @@ const Register = () => {
             />
           </div>
           <button
+          onClick={() => nagigate("/login")}
             type="submit"
             className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
