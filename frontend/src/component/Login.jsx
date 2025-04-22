@@ -28,7 +28,7 @@ const Login = () => {
       setMessage("Login successful!");
       console.log(response.data); // Debug log
       setFormData({ email: "", password: "" }); // Clear form data after successful login
-      navigate("/home"); // Navigate after successful login
+      navigate("/book"); // Navigate after successful login
     } catch (error) {
       setMessage(error.response?.data?.message || "Invalid credentials");
       console.error("Error logging in user:", error);
