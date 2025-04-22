@@ -4,6 +4,10 @@ import Login from "./component/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./component/Home";
 import Book from "./component/dashboard/Book";
+import Collaborate from "./component/dashboard/Collaborate";
+import Profile from "./component/dashboard/Profile";
+import Dashboard from "./component/dashboard/Dashboard";
+import Settings from "./component/dashboard/Settings";
 
 const App = () => {
   return (
@@ -13,9 +17,13 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/book" element={<Book />} />
-          {/* Add more routes as needed */}
 
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="/book" element={<Book />} />
+            <Route path="/collaborate" element={<Collaborate />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
         </Routes>
       </Router>
     </>
