@@ -1,8 +1,12 @@
 import React from 'react'
+import Register from './component/Register'
 
 const App = () => {
   return (
-    <div>write book together</div>
+    <div>
+
+      <Register/>
+    </div>
   )
 }
 
