@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -29,9 +30,9 @@ const Login = () => {
       console.log(response.data); // Debug log
       setFormData({ email: "", password: "" }); // Clear form data after successful login
       navigate("/dashboard"); // Navigate after successful login
+      toast.success("Login successful!"); // Show success message
     } catch (error) {
-      setMessage(error.response?.data?.message || "Invalid credentials");
-      console.error("Error logging in user:", error);
+    toast.error('Login failed! Please check your credentials.'); // Show error message
     }
   };
 

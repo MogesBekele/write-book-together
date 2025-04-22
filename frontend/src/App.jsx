@@ -8,10 +8,15 @@ import Collaborate from "./component/dashboard/Collaborate";
 import Profile from "./component/dashboard/Profile";
 import Dashboard from "./component/dashboard/Dashboard";
 import Settings from "./component/dashboard/Settings";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const App = () => {
   return (
     <>
+      <ToastContainer />
+
       <Router>
         <Routes>
           {/* Public Routes */}
