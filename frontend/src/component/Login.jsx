@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate(); // Use navigate for redirection
 
   const [message, setMessage] = useState("");
 
@@ -76,6 +78,7 @@ const Login = () => {
             />
           </div>
           <button
+          onClick={() => navigate("/")}
             type="submit"
             className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
