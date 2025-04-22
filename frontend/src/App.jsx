@@ -14,15 +14,17 @@ const App = () => {
     <>
       <Router>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
+          {/* Dashboard Routes */}
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="/book" element={<Book />} />
-            <Route path="/collaborate" element={<Collaborate />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="books" element={<Book />} />
+            <Route path="collaborate" element={<Collaborate />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
       </Router>

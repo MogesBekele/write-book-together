@@ -7,6 +7,7 @@ const Book = () => {
     { id: 3, title: "Book Three", author: "Author Three" },
   ]);
 
+  // Add a new book
   const handleAddBook = () => {
     const newBook = {
       id: books.length + 1,
@@ -14,6 +15,12 @@ const Book = () => {
       author: `Author ${books.length + 1}`,
     };
     setBooks([...books, newBook]);
+  };
+
+  // Delete a book
+  const handleDeleteBook = (id) => {
+    const updatedBooks = books.filter((book) => book.id !== id);
+    setBooks(updatedBooks);
   };
 
   return (
@@ -26,19 +33,31 @@ const Book = () => {
         >
           Add New Book
         </button>
-        <ul className="space-y-4">
-          {books.map((book) => (
-            <li
-              key={book.id}
-              className="bg-gray-50 p-4 rounded-md shadow border border-gray-200"
-            >
-              <h2 className="text-xl font-semibold text-gray-800">
-                {book.title}
-              </h2>
-              <p className="text-gray-600">Author: {book.author}</p>
-            </li>
-          ))}
-        </ul>
+        {books.length > 0 ? (
+          <ul className="space-y-4">
+            {books.map((book) => (
+              <li
+                key={book.id}
+                className="bg-gray-50 p-4 rounded-md shadow border border-gray-200 flex justify-between items-center"
+              >
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    {book.title}
+                  </h2>
+                  <p className="text-gray-600">Author: {book.author}</p>
+                </div>
+                <button
+                  onClick={() => handleDeleteBook(book.id)}
+                  className="bg-red-600 text-white font-medium py-1 px-3 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-600">No books available. Add a new book to get started!</p>
+        )}
       </div>
     </div>
   );
