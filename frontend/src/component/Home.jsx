@@ -5,22 +5,25 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to Write Together</h1>
-        <p className="text-gray-600 text-lg mb-6">
-          Collaborate with others to write amazing stories, articles, or books. Join our community and start your writing journey today!
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 to-teal-500 p-4">
+      <div className="bg-white shadow-2xl rounded-lg p-10 w-full max-w-3xl text-center">
+        <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
+          Welcome to <span className="text-teal-600">Write Together</span>
+        </h1>
+        <p className="text-gray-700 text-lg mb-8">
+          Collaborate with others to write amazing stories, articles, or books.
+          Join our community and start your writing journey today!
         </p>
-        <div className="space-x-4">
+        <div className="flex justify-center space-x-6">
           <button
             onClick={() => navigate("/register")}
-            className="bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300"
           >
             Get Started
           </button>
           <button
             onClick={() => navigate("/login")}
-            className="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+            className="bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400"
           >
             Login
           </button>
