@@ -26,13 +26,23 @@ const Login = () => {
         "http://localhost:4000/api/user/login",
         formData
       );
+
+      // Save the token and userId to localStorage
+      localStorage.setItem("token", response.data.token); // Save token
+      localStorage.setItem("userId", response.data.userId); // Save userId if needed
+
       setMessage("Login successful!");
       console.log(response.data); // Debug log
       setFormData({ email: "", password: "" }); // Clear form data after successful login
-      navigate("/dashboard"); // Navigate after successful login
       toast.success("Login successful!"); // Show success message
+
+      navigate("/dashboard"); // Navigate after successful login
     } catch (error) {
-    toast.error('Login failed! Please check your credentials.'); // Show error message
+      console.error("Login error:", error);
+      toast.error(
+        error.response?.data?.error ||
+          "Login failed! Please check your credentials."
+      ); // Show error message
     }
   };
 
@@ -80,7 +90,6 @@ const Login = () => {
             />
           </div>
           <button
-       
             type="submit"
             className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >

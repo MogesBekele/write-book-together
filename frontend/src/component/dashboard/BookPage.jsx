@@ -12,8 +12,9 @@ const BookPage = () => {
   const getToken = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("You are not authenticated. Please log in.");
-      throw new Error("Token is missing");
+      toast.error("You are not authenticated. Redirecting to login...");
+      window.location.href = "/login"; // Redirect to login page
+      return null;
     }
     return `Bearer ${token}`;
   };
@@ -21,8 +22,11 @@ const BookPage = () => {
   // Fetch contributions
   const fetchContributions = async () => {
     try {
+      const token = getToken();
+      if (!token) return; // Stop execution if token is missing
+
       const response = await axios.get("http://localhost:4000/api/book", {
-        headers: { Authorization: getToken() },
+        headers: { Authorization: token },
       });
       setContributions(response.data.contributions);
     } catch (error) {
@@ -36,11 +40,14 @@ const BookPage = () => {
   // Add a new contribution
   const handleAddContribution = async () => {
     try {
+      const token = getToken();
+      if (!token) return;
+
       await axios.post(
         "http://localhost:4000/api/book/contribute",
         { content: newContent },
         {
-          headers: { Authorization: getToken() },
+          headers: { Authorization: token },
         }
       );
       toast.success("Contribution added successfully!");
@@ -55,8 +62,11 @@ const BookPage = () => {
   // Delete a contribution
   const handleDeleteContribution = async (id) => {
     try {
+      const token = getToken();
+      if (!token) return;
+
       await axios.delete(`http://localhost:4000/api/book/contribution/${id}`, {
-        headers: { Authorization: getToken() },
+        headers: { Authorization: token },
       });
       toast.success("Contribution deleted successfully!");
       fetchContributions();
@@ -71,11 +81,14 @@ const BookPage = () => {
   // Edit a contribution
   const handleEditContribution = async () => {
     try {
+      const token = getToken();
+      if (!token) return;
+
       await axios.put(
         `http://localhost:4000/api/book/contribution/${editingContribution._id}`,
         { content: editedContent },
         {
-          headers: { Authorization: getToken() },
+          headers: { Authorization: token },
         }
       );
       toast.success("Contribution updated successfully!");

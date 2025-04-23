@@ -8,14 +8,13 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./component/Home";
-
-import Collaborate from "./component/dashboard/Collaborate";
 import Profile from "./component/dashboard/Profile";
 import Dashboard from "./component/dashboard/Dashboard";
 import Settings from "./component/dashboard/Settings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookPage from "./component/dashboard/BookPage";
+import Collaborate from "./component/dashboard/Collaborate";
 
 const App = () => {
   return (
