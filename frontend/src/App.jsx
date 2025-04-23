@@ -17,6 +17,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Collaborate from "./component/dashboard/Collaborate";
 import AddBook from "./component/dashboard/AddBook";
 import BookDetails from "./component/dashboard/BookDetails";
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
 
 const App = () => {
   return (
@@ -32,11 +39,17 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {/* Dashboard Routes */}
-          <Route path="/dashboard" element={<Dashboard />}>
-            <Route index element={<Navigate to="books" />} />{" "}
-            {/* Redirect to /dashboard/books */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="books" />} />
             <Route path="books" element={<AddBook />} />
-            <Route path="/book/:bookId" element={<BookDetails />} />
+            <Route path="book/:bookId" element={<BookDetails />} />
             <Route path="collaborate" element={<Collaborate />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />

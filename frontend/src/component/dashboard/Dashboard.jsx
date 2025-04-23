@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
+  
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Sidebar */}
@@ -39,14 +40,14 @@ const Dashboard = () => {
             Profile
           </NavLink>
           <NavLink
-            to="settings"
+            to={`bookdetails/:id`}
             className={({ isActive }) =>
               isActive
                 ? "block bg-gray-600 text-white py-2 px-4 rounded-md"
                 : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
             }
           >
-            Settings
+            Book Details
           </NavLink>
         </nav>
       </div>
