@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import UserRoute from './routes/UserRoute.js';
 import connectDB from './config/db.js'; // Import your database connection function
+import BookRoute from './routes/BookRoute.js'; // Import BookRoute
 
 
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', UserRoute);
+app.use('/api/book', BookRoute); // Ensure BookRoute is imported
 
 
 app.listen(PORT, () => {

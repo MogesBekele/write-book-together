@@ -3,7 +3,7 @@ import verifyToken from "../middleware/VerifyToken.js";
 import {
   contributeToBook,
   getBookContent,
-} from "../controllers/bookController.js";
+} from "../controllers/BookController.js";
 
 const router = express.Router();
 
