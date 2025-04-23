@@ -34,7 +34,7 @@ const BookPage = () => {
         }
       );
       setContent('');
-      fetchBook(); 
+      fetchBook(); // Refresh
     } catch (err) {
       console.error('Failed to contribute:', err);
       alert('Contribution failed');
