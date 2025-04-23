@@ -8,14 +8,28 @@ const BookPage = () => {
   const [editingContribution, setEditingContribution] = useState(null);
   const [editedContent, setEditedContent] = useState("");
 
+  // Helper function to get the token
+  const getToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("You are not authenticated. Please log in.");
+      throw new Error("Token is missing");
+    }
+    return `Bearer ${token}`;
+  };
+
   // Fetch contributions
   const fetchContributions = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/book");
+      const response = await axios.get("http://localhost:4000/api/book", {
+        headers: { Authorization: getToken() },
+      });
       setContributions(response.data.contributions);
     } catch (error) {
       console.error("Error fetching contributions:", error);
-      toast.error("Failed to fetch contributions.");
+      toast.error(
+        error.response?.data?.error || "Failed to fetch contributions."
+      );
     }
   };
 
@@ -26,7 +40,7 @@ const BookPage = () => {
         "http://localhost:4000/api/book/contribute",
         { content: newContent },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: getToken() },
         }
       );
       toast.success("Contribution added successfully!");
@@ -42,7 +56,7 @@ const BookPage = () => {
   const handleDeleteContribution = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/api/book/contribution/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: getToken() },
       });
       toast.success("Contribution deleted successfully!");
       fetchContributions();
@@ -61,7 +75,7 @@ const BookPage = () => {
         `http://localhost:4000/api/book/contribution/${editingContribution._id}`,
         { content: editedContent },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: getToken() },
         }
       );
       toast.success("Contribution updated successfully!");
