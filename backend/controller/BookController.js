@@ -1,6 +1,7 @@
 import Book from '../models/BookModel.js';
 import User from '../models/UserModel.js';
 
+// POST /api/book/contribute
 const contributeToBook = async (req, res) => {
   try {
     const { content } = req.body;
