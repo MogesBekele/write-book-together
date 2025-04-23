@@ -16,7 +16,7 @@ const Dashboard = () => {
                 : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
             }
           >
-            Manage Books
+            Add Books
           </NavLink>
           <NavLink
             to="collaborate"
