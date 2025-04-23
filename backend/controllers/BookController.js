@@ -49,4 +49,13 @@ export const contributeToBook = async (req, res) => {
     res.status(500).json({ message: 'Failed to contribute', error: err });
   }
 };
+export const getAllBooks = async (req, res) => {
+  try {
+    const books = await Book.find().populate('createdBy', 'username'); // Populate the 'createdBy' field
+    res.status(200).json(books);
+  } catch (err) {
+    console.error("Error fetching books:", err); // Debug log
+    res.status(500).json({ message: 'Failed to fetch books', error: err });
+  }
+};
 

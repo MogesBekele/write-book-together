@@ -19,28 +19,19 @@ const Dashboard = () => {
           >
             Add Books
           </NavLink>
+        
           <NavLink
-            to="collaborate"
-            className={({ isActive }) =>
-              isActive
-                ? "block bg-green-600 text-white py-2 px-4 rounded-md"
-                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
-            }
-          >
-            Collaborate
-          </NavLink>
-          <NavLink
-            to="profile"
+            to="get-all-books"
             className={({ isActive }) =>
               isActive
                 ? "block bg-purple-600 text-white py-2 px-4 rounded-md"
                 : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
             }
           >
-            Profile
+            Get All Books
           </NavLink>
           <NavLink
-            to={`bookdetails/:id`}
+           to="bookdetails/123" // Replace "123" with an actual book ID
             className={({ isActive }) =>
               isActive
                 ? "block bg-gray-600 text-white py-2 px-4 rounded-md"

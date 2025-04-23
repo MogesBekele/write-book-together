@@ -4,17 +4,22 @@ import { useParams } from 'react-router-dom';
 
 const BookDetails = () => {
   const { bookId } = useParams();
+  console.log("Book ID from URL:", bookId);
   const [book, setBook] = useState(null);
   const [text, setText] = useState('');
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchBook = async () => {
+      if (!bookId) {
+        console.error("Book ID is undefined");
+        return;
+      }
       try {
         const res = await axios.get(`http://localhost:4000/api/book/${bookId}`);
         setBook(res.data);
       } catch (error) {
-        console.error('Failed to fetch book:', error);
+        console.error("Failed to fetch book:", error);
       }
     };
     fetchBook();
