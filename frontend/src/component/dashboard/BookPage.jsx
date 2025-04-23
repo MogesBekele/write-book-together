@@ -1,201 +1,85 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const BookPage = () => {
-  const [contributions, setContributions] = useState([]);
-  const [newContent, setNewContent] = useState("");
-  const [editingContribution, setEditingContribution] = useState(null);
-  const [editedContent, setEditedContent] = useState("");
+  const [book, setBook] = useState(null);
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
-  // Helper function to get the token
-  const getToken = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("You are not authenticated. Redirecting to login...");
-      window.location.href = "/login"; // Redirect to login page
-      return null;
-    }
-    return `Bearer ${token}`;
-  };
-
-  // Fetch contributions
-  const fetchContributions = async () => {
+  const fetchBook = async () => {
     try {
-      const token = getToken();
-      if (!token) return; // Stop execution if token is missing
-
-      const response = await axios.get("http://localhost:4000/api/book", {
-        headers: { Authorization: token },
-      });
-      setContributions(response.data.contributions);
-    } catch (error) {
-      console.error("Error fetching contributions:", error);
-      toast.error(
-        error.response?.data?.error || "Failed to fetch contributions."
-      );
-    }
-  };
-
-  // Add a new contribution
-  const handleAddContribution = async () => {
-    try {
-      const token = getToken();
-      if (!token) return;
-
-      await axios.post(
-        "http://localhost:4000/api/book/contribute",
-        { content: newContent },
-        {
-          headers: { Authorization: token },
-        }
-      );
-      toast.success("Contribution added successfully!");
-      setNewContent("");
-      fetchContributions();
-    } catch (error) {
-      console.error("Error adding contribution:", error);
-      toast.error(error.response?.data?.error || "Failed to add contribution.");
-    }
-  };
-
-  // Delete a contribution
-  const handleDeleteContribution = async (id) => {
-    try {
-      const token = getToken();
-      if (!token) return;
-
-      await axios.delete(`http://localhost:4000/api/book/contribution/${id}`, {
-        headers: { Authorization: token },
-      });
-      toast.success("Contribution deleted successfully!");
-      fetchContributions();
-    } catch (error) {
-      console.error("Error deleting contribution:", error);
-      toast.error(
-        error.response?.data?.error || "Failed to delete contribution."
-      );
-    }
-  };
-
-  // Edit a contribution
-  const handleEditContribution = async () => {
-    try {
-      const token = getToken();
-      if (!token) return;
-
-      await axios.put(
-        `http://localhost:4000/api/book/contribution/${editingContribution._id}`,
-        { content: editedContent },
-        {
-          headers: { Authorization: token },
-        }
-      );
-      toast.success("Contribution updated successfully!");
-      setEditingContribution(null);
-      setEditedContent("");
-      fetchContributions();
-    } catch (error) {
-      console.error("Error editing contribution:", error);
-      toast.error(
-        error.response?.data?.error || "Failed to edit contribution."
-      );
+      const res = await axios.get('http://localhost:4000/api/book');
+      setBook(res.data);
+    } catch (err) {
+      console.error('Failed to fetch book:', err);
     }
   };
 
   useEffect(() => {
-    fetchContributions();
+    fetchBook();
   }, []);
 
+  const handleSubmit = async () => {
+    if (!content.trim()) return;
+    try {
+      setLoading(true);
+      await axios.post(
+        'http://localhost:4000/api/book/contribute',
+        { content },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setContent('');
+      fetchBook(); // Refresh
+    } catch (err) {
+      console.error('Failed to contribute:', err);
+      alert('Contribution failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Book Contributions
-        </h1>
+    <div className="max-w-3xl mx-auto p-6">
+      <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+        {book?.title || 'Write Together Book'}
+      </h1>
 
-        {/* Add Contribution */}
-        <div className="mb-6">
-          <textarea
-            value={newContent}
-            onChange={(e) => setNewContent(e.target.value)}
-            placeholder="Write your contribution..."
-            className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
-          />
-          <button
-            onClick={handleAddContribution}
-            className="mt-2 bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      {/* Contributions */}
+      <div className="space-y-4 mb-8">
+        {book?.contributions?.map((contrib, i) => (
+          <div
+            key={i}
+            className="bg-gray-100 p-4 rounded-md shadow-sm"
           >
-            Add Contribution
-          </button>
-        </div>
-
-        {/* Contributions List */}
-        <ul className="space-y-4">
-          {contributions.map((contribution) => (
-            <li
-              key={contribution._id}
-              className="bg-gray-50 p-4 rounded-md shadow border border-gray-200"
-            >
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-gray-800">{contribution.content}</p>
-                  <p className="text-sm text-gray-600">
-                    By: {contribution.username} |{" "}
-                    {new Date(contribution.createdAt).toLocaleString()}
-                  </p>
-                </div>
-                {contribution.userId === localStorage.getItem("userId") && (
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        setEditingContribution(contribution);
-                        setEditedContent(contribution.content);
-                      }}
-                      className="bg-yellow-500 text-white font-medium py-1 px-3 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteContribution(contribution._id)}
-                      className="bg-red-600 text-white font-medium py-1 px-3 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        {/* Edit Contribution Modal */}
-        {editingContribution && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-              <h2 className="text-xl font-bold mb-4">Edit Contribution</h2>
-              <textarea
-                value={editedContent}
-                onChange={(e) => setEditedContent(e.target.value)}
-                className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
-              />
-              <div className="flex justify-end space-x-4 mt-4">
-                <button
-                  onClick={() => setEditingContribution(null)}
-                  className="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleEditContribution}
-                  className="bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
+            <p className="text-sm font-semibold text-blue-600 mb-1">
+              {contrib.username || 'Unknown'}
+            </p>
+            <p className="text-gray-800">{contrib.content}</p>
           </div>
-        )}
+        ))}
+      </div>
+
+      {/* Contribution Form */}
+      <div>
+        <textarea
+          className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          rows="4"
+          placeholder="Write your contribution here..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        ></textarea>
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+        >
+          {loading ? 'Submitting...' : 'Submit Contribution'}
+        </button>
       </div>
     </div>
   );
