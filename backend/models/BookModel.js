@@ -1,20 +1,32 @@
-// models/Book.js
-import mongoose from "mongoose";
-
-const contributionSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  username: { type: String, required: true },
-  content: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+import mongoose from 'mongoose';
 
 const bookSchema = new mongoose.Schema({
-  title: { type: String, default: "Write Together", required: true },
-  contributions: [contributionSchema],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  title: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  contributions: [
+    {
+      text: String,
+      contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      date: { type: Date, default: Date.now }
+    }
+  ]
+}, {
+  timestamps: true
 });
 
-const Book = mongoose.model("Book", bookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 export default Book;
+

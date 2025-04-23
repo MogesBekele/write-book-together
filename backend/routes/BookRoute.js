@@ -1,13 +1,10 @@
 import express from "express";
 import verifyToken from "../middleware/VerifyToken.js";
-import {
-  contributeToBook,
-  getBookContent,
-} from "../controller/BookController.js";
+
+import { addBook } from "../controllers/BookController.js";
 
 const router = express.Router();
 
-router.post("/contribute", verifyToken, contributeToBook);
-router.get("/", getBookContent);
+router.post("/add", verifyToken, addBook);
 
 export default router;

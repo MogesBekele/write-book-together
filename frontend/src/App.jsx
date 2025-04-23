@@ -13,8 +13,9 @@ import Dashboard from "./component/dashboard/Dashboard";
 import Settings from "./component/dashboard/Settings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BookPage from "./component/dashboard/BookPage";
+//import BookPage from "./component/dashboard/BookPage";
 import Collaborate from "./component/dashboard/Collaborate";
+import AddBook from "./component/dashboard/AddBook";
 
 const App = () => {
   return (
@@ -33,7 +34,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<Navigate to="books" />} />{" "}
             {/* Redirect to /dashboard/books */}
-            <Route path="books" element={<BookPage />} />
+            <Route path="books" element={<AddBook />} />
             <Route path="collaborate" element={<Collaborate />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
