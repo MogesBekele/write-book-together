@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
@@ -12,32 +12,16 @@ const GetAllBook = () => {
         setLoading(true); // Set loading to true before fetching
         const res = await axios.get("http://localhost:4000/api/book");
         setBooks(res.data);
-        setError(null); // Clear any previous errors
+        toast.success("Books loaded successfully!"); // Success toast
       } catch (err) {
         console.error("Failed to load books:", err);
-        setError(err.response?.data?.message || "Failed to load books");
+        toast.error(err.response?.data?.message || "Failed to load books"); // Error toast
       } finally {
         setLoading(false); // Set loading to false after fetching
       }
     };
     fetchBooks();
   }, []);
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="text-center">
-          <p className="text-red-500 font-semibold text-lg">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   if (loading) {
     return (
@@ -52,6 +36,7 @@ const GetAllBook = () => {
   }
 
   if (!books.length) {
+    toast.info("No books available."); // Info toast for empty books
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
