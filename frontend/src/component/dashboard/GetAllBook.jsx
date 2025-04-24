@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [toastShown, setToastShown] = useState(false); // Track if toast has been shown
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,22 +16,20 @@ const GetAllBook = () => {
         setBooks(res.data);
 
         // Show success toast only if books are fetched and not empty
-        if (res.data.length > 0 && !toastShown) {
+        if (res.data.length > 0) {
           toast.success("Books loaded successfully!");
-          setToastShown(true); // Mark toast as shown
+        } else {
+          toast.info("No books available.");
         }
       } catch (err) {
         console.error("Failed to load books:", err);
-        if (!toastShown) {
-          toast.error(err.response?.data?.message || "Failed to load books");
-          setToastShown(true); // Mark toast as shown
-        }
+        toast.error(err.response?.data?.message || "Failed to load books");
       } finally {
         setLoading(false);
       }
     };
     fetchBooks();
-  }, [toastShown]);
+  }, []); // Removed toastShown dependency
 
   if (loading) {
     return (
@@ -47,11 +44,6 @@ const GetAllBook = () => {
   }
 
   if (!books.length) {
-    // Show info toast only once when no books are available
-    if (!toastShown) {
-      toast.info("No books available.");
-      setToastShown(true); // Mark toast as shown
-    }
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
