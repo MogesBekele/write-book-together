@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 //import BookPage from "./component/dashboard/BookPage";
 import Collaborate from "./component/dashboard/Collaborate";
 import AddBook from "./component/dashboard/AddBook";
-
+import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -53,8 +53,9 @@ const App = () => {
             <Route path="collaborate" element={<Collaborate />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="get-all-books" element={<GetAllBook />} />{" "}
-            {/* Ensure this route exists */}
+            <Route path="get-all-books" element={<GetAllBook />} />
+            <Route path="bookdetails/:bookId" element={<BookDetail />} />{" "}
+            {/* Add this route */}
           </Route>
         </Routes>
       </Router>
