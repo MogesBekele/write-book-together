@@ -13,7 +13,12 @@ const GetAllBook = () => {
     const fetchBooks = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:4000/api/book");
+        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+        const res = await axios.get("http://localhost:4000/api/book", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add Authorization header
+          },
+        });
         setBooks(res.data);
 
         // Show success toast only if books are fetched and not empty
