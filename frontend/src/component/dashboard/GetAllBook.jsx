@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true); // Add a loading state
+  const navigate = useNavigate(); // Import useNavigate for navigation
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -69,10 +71,7 @@ const GetAllBook = () => {
             </div>
             <button
               className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-              onClick={() => {
-                // Add your logic here (e.g., navigate to book details)
-                console.log(`View details for book ID: ${book._id}`);
-              }}
+              onClick={() => navigate(`/dashboard/bookdetails/${book._id}`)}
             >
               View Details
             </button>
