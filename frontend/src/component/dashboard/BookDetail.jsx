@@ -1,9 +1,68 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const BookDetail = () => {
-  return (
-    <div>BookDetail</div>
-  )
-}
+  const { bookId } = useParams(); // Extract bookId from the URL
+  const [book, setBook] = useState(null); // State to store book details
+  const [loading, setLoading] = useState(true); // State to track loading
+  const [error, setError] = useState(null); // State to handle errors
 
-export default BookDetail
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/api/book/${bookId}`);
+        setBook(res.data); // Set the book data
+        setError(null); // Clear any previous errors
+      } catch (err) {
+        console.error("Failed to fetch book:", err);
+        setError("Failed to load book details.");
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+    fetchBook();
+  }, [bookId]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-gray-500 font-medium text-lg">
+          Loading book details...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-red-500 font-medium text-lg">{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <h1 className="text-4xl font-bold text-blue-700 mb-6">{book.title}</h1>
+      <p className="text-gray-700 mb-4">{book.description}</p>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Contributions
+      </h2>
+      {book.contributions?.length > 0 ? (
+        book.contributions.map((contribution, index) => (
+          <div key={index} className="mb-4">
+            <p className="text-gray-600">{contribution.text}</p>
+            <small className="text-gray-500">
+              By {contribution.contributor?.username || "Unknown"}
+            </small>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">No contributions yet.</p>
+      )}
+    </div>
+  );
+};
+
+export default BookDetail;
