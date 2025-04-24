@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const BookDetails = () => {
   const { bookId } = useParams();
   console.log("Book ID from URL:", bookId);
   const [book, setBook] = useState(null);
-  const [text, setText] = useState('');
-  const token = localStorage.getItem('token');
+  const [text, setText] = useState("");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -33,10 +33,13 @@ const BookDetails = () => {
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert('Contribution added!');
-      setText('');
+      alert("Contribution added!");
+      setText("");
+      // Refresh book data to show the new contribution
+      const res = await axios.get(`http://localhost:4000/api/book/${bookId}`);
+      setBook(res.data);
     } catch (error) {
-      alert('Failed to contribute');
+      alert("Failed to contribute");
       console.error(error);
     }
   };
@@ -53,19 +56,23 @@ const BookDetails = () => {
         <textarea
           placeholder="Write your contribution..."
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           required
         />
         <button type="submit">Submit Contribution</button>
       </form>
 
       <h3>Contributions</h3>
-      {book.contributions?.map((c, idx) => (
-        <div key={idx}>
-          <p>{c.text}</p>
-          <small>By user {c.contributor}</small>
-        </div>
-      ))}
+      {book.contributions?.length > 0 ? (
+        book.contributions.map((c, idx) => (
+          <div key={idx}>
+            <p>{c.text}</p>
+            <small>By user {c.contributor?.username || "Unknown"}</small>
+          </div>
+        ))
+      ) : (
+        <p>No contributions yet.</p>
+      )}
     </div>
   );
 };
