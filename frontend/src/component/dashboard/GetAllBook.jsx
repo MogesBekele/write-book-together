@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -36,7 +38,17 @@ const GetAllBook = () => {
   if (!books.length)
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-gray-500 font-medium text-lg">Loading books...</p>
+        <div className="text-center">
+          <p className="text-gray-500 font-medium text-lg mb-4">
+            Loading books...
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
 
@@ -52,12 +64,14 @@ const GetAllBook = () => {
             className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition"
           >
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-              {book.title}
+              {book.title || "Untitled Book"}
             </h3>
-            <p className="text-gray-600 mb-4">{book.description}</p>
+            <p className="text-gray-600 mb-4">
+              {book.description || "No description available."}
+            </p>
             <button
               className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-              onClick={() => alert(`Viewing details for: ${book.title}`)}
+              onClick={() => navigate(`/dashboard/bookdetails/${book._id}`)}
             >
               View Details
             </button>
