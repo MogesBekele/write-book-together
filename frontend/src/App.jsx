@@ -45,7 +45,7 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
             <Route path="get-all-books" element={<GetAllBook />} />
-            <Route path="bookdetails/:bookId" element={<BookDetail />} />{" "}
+            <Route path="bookdetails/:bookId" element={<BookDetail />} />
             {/* Add this route */}
           </Route>
         </Routes>
