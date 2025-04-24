@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
+  const navigate = useNavigate(); // For navigation
   const [book, setBook] = useState(null); // State to store book details
   const [loading, setLoading] = useState(true); // State to track loading
   const [error, setError] = useState(null); // State to handle errors
@@ -11,18 +12,33 @@ const BookDetail = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/book/${bookId}`);
+        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+        const res = await axios.get(
+          `http://localhost:4000/api/book/${bookId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Add Authorization header
+            },
+          }
+        );
         setBook(res.data); // Set the book data
         setError(null); // Clear any previous errors
       } catch (err) {
         console.error("Failed to fetch book:", err);
-        setError("Failed to load book details.");
+        if (err.response?.status === 401) {
+          setError("You are not authorized. Please log in.");
+          navigate("/login"); // Redirect to login page
+        } else {
+          setError(
+            err.response?.data?.message || "Failed to load book details."
+          );
+        }
       } finally {
         setLoading(false); // Set loading to false after fetching
       }
     };
     fetchBook();
-  }, [bookId]);
+  }, [bookId, navigate]);
 
   if (loading) {
     return (

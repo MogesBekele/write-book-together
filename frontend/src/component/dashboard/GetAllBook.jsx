@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true); // Add a loading state
-  const navigate = useNavigate(); // Import useNavigate for navigation
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        setLoading(true); // Set loading to true before fetching
+        setLoading(true);
         const res = await axios.get("http://localhost:4000/api/book");
         setBooks(res.data);
-        toast.success("Books loaded successfully!"); // Success toast
+
+        // Show success toast only if books are fetched and not empty
+        if (res.data.length > 0) {
+          toast.success("Books loaded successfully!");
+        }
       } catch (err) {
         console.error("Failed to load books:", err);
-        toast.error(err.response?.data?.message || "Failed to load books"); // Error toast
+        toast.error(err.response?.data?.message || "Failed to load books");
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
     fetchBooks();
@@ -38,7 +42,8 @@ const GetAllBook = () => {
   }
 
   if (!books.length) {
-    toast.info("No books available."); // Info toast for empty books
+    // Show info toast only once when no books are available
+    toast.info("No books available.");
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
