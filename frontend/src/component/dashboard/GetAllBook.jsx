@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -69,12 +67,6 @@ const GetAllBook = () => {
             <p className="text-gray-600 mb-4">
               {book.description || "No description available."}
             </p>
-            <button
-              className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-              onClick={() => navigate(`/dashboard/bookdetails/${book._id}`)}
-            >
-              View Details
-            </button>
           </li>
         ))}
       </ul>

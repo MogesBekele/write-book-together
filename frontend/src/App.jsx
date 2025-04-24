@@ -50,12 +50,11 @@ const App = () => {
           >
             <Route index element={<Navigate to="books" />} />
             <Route path="books" element={<AddBook />} />
-          
             <Route path="collaborate" element={<Collaborate />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="get-all-books" element={<GetAllBook />} />
-            
+            <Route path="get-all-books" element={<GetAllBook />} />{" "}
+            {/* Ensure this route exists */}
           </Route>
         </Routes>
       </Router>

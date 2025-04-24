@@ -30,16 +30,7 @@ const Dashboard = () => {
           >
             Get All Books
           </NavLink>
-          <NavLink
-           to="bookdetails/123" // Replace "123" with an actual book ID
-            className={({ isActive }) =>
-              isActive
-                ? "block bg-gray-600 text-white py-2 px-4 rounded-md"
-                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
-            }
-          >
-            Book Details
-          </NavLink>
+       
         </nav>
       </div>
 
