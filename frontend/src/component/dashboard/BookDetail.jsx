@@ -37,7 +37,7 @@ const BookDetail = () => {
   // useEffect to call fetchBook
   useEffect(() => {
     fetchBook();
-  }, [bookId, navigate]);
+  }, [bookId]);
 
   if (loading) {
     return <Loading />; // Replace with the Loading component
