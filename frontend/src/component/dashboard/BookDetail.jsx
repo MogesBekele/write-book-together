@@ -10,41 +10,37 @@ const BookDetail = () => {
   const [loading, setLoading] = useState(true); // State to track loading
   const [error, setError] = useState(null); // State to handle errors
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      try {
-        const token = localStorage.getItem("token"); // Retrieve token from localStorage
-        const res = await axios.get(
-          `http://localhost:4000/api/book/${bookId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Add Authorization header
-            },
-          }
-        );
-        setBook(res.data); // Set the book data
-        setError(null); // Clear any previous errors
-      } catch (err) {
-        console.error("Failed to fetch book:", err);
-        if (err.response?.status === 401) {
-          setError("You are not authorized. Please log in.");
-          navigate("/login"); // Redirect to login page
-        } else {
-          setError(
-            err.response?.data?.message || "Failed to load book details."
-          );
-        }
-      } finally {
-        setLoading(false); // Set loading to false after fetching
+  // Fetch book details function
+  const fetchBook = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add Authorization header
+        },
+      });
+      setBook(res.data); // Set the book data
+      setError(null); // Clear any previous errors
+    } catch (err) {
+      console.error("Failed to fetch book:", err);
+      if (err.response?.status === 401) {
+        setError("You are not authorized. Please log in.");
+        navigate("/login"); // Redirect to login page
+      } else {
+        setError(err.response?.data?.message || "Failed to load book details.");
       }
-    };
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
+  };
+
+  // useEffect to call fetchBook
+  useEffect(() => {
     fetchBook();
   }, [bookId, navigate]);
 
   if (loading) {
-    return (
-      <Loading/>
-    );
+    return <Loading />; // Replace with the Loading component
   }
 
   if (error) {

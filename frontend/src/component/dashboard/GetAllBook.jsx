@@ -10,36 +10,39 @@ const GetAllBook = () => {
   const navigate = useNavigate();
   const toastShown = useRef(false); // Ref to track if toast has been shown
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem("token"); // Retrieve token from localStorage
-        const res = await axios.get("http://localhost:4000/api/book", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Add Authorization header
-          },
-        });
-        setBooks(res.data);
+  // Fetch books function
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const res = await axios.get("http://localhost:4000/api/book", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add Authorization header
+        },
+      });
+      setBooks(res.data);
 
-        // Show success toast only if books are fetched and not empty
-        if (res.data.length > 0 && !toastShown.current) {
-          toast.success("Books loaded successfully!");
-          toastShown.current = true; // Mark toast as shown
-        } else if (res.data.length === 0 && !toastShown.current) {
-          toast.info("No books available.");
-          toastShown.current = true; // Mark toast as shown
-        }
-      } catch (err) {
-        console.error("Failed to load books:", err);
-        if (!toastShown.current) {
-          toast.error(err.response?.data?.message || "Failed to load books");
-          toastShown.current = true; // Mark toast as shown
-        }
-      } finally {
-        setLoading(false);
+      // Show success toast only if books are fetched and not empty
+      if (res.data.length > 0 && !toastShown.current) {
+        toast.success("Books loaded successfully!");
+        toastShown.current = true; // Mark toast as shown
+      } else if (res.data.length === 0 && !toastShown.current) {
+        toast.info("No books available.");
+        toastShown.current = true; // Mark toast as shown
       }
-    };
+    } catch (err) {
+      console.error("Failed to load books:", err);
+      if (!toastShown.current) {
+        toast.error(err.response?.data?.message || "Failed to load books");
+        toastShown.current = true; // Mark toast as shown
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect to call fetchBooks
+  useEffect(() => {
     fetchBooks();
   }, []); // Empty dependency array ensures this runs only once
 
