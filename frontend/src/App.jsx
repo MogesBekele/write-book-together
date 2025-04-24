@@ -13,18 +13,10 @@ import Dashboard from "./component/dashboard/Dashboard";
 import Settings from "./component/dashboard/Settings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//import BookPage from "./component/dashboard/BookPage";
-//import Collaborate from "./component/dashboard/Collaborate";
 import AddBook from "./component/dashboard/AddBook";
 import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
-  return children;
-};
+import ProtectedRoute from "./component/ProtectedRoute"; // Import ProtectedRoute
 
 const App = () => {
   return (
