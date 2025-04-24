@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../Loading";
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
@@ -42,11 +43,7 @@ const BookDetail = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-gray-500 font-medium text-lg">
-          Loading book details...
-        </p>
-      </div>
+      <Loading/>
     );
   }
 
