@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading"; // Import the Loading component
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
@@ -43,15 +44,7 @@ const GetAllBook = () => {
   }, []); // Empty dependency array ensures this runs only once
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="text-center">
-          <p className="text-gray-500 font-medium text-lg mb-4">
-            Loading books...
-          </p>
-        </div>
-      </div>
-    );
+    return <Loading />; // Replace with the Loading component
   }
 
   if (!books.length) {
