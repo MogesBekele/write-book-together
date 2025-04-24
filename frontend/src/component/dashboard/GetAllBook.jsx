@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const toastShown = useRef(false); // Ref to track if toast has been shown
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -16,20 +17,25 @@ const GetAllBook = () => {
         setBooks(res.data);
 
         // Show success toast only if books are fetched and not empty
-        if (res.data.length > 0) {
+        if (res.data.length > 0 && !toastShown.current) {
           toast.success("Books loaded successfully!");
-        } else {
+          toastShown.current = true; // Mark toast as shown
+        } else if (res.data.length === 0 && !toastShown.current) {
           toast.info("No books available.");
+          toastShown.current = true; // Mark toast as shown
         }
       } catch (err) {
         console.error("Failed to load books:", err);
-        toast.error(err.response?.data?.message || "Failed to load books");
+        if (!toastShown.current) {
+          toast.error(err.response?.data?.message || "Failed to load books");
+          toastShown.current = true; // Mark toast as shown
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchBooks();
-  }, []); // Removed toastShown dependency
+  }, []); // Empty dependency array ensures this runs only once
 
   if (loading) {
     return (
