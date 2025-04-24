@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AddBook from "./component/dashboard/AddBook";
 import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
-import ProtectedRoute from "./component/ProtectedRoute"; // Import ProtectedRoute
+import ProtectedRoute from "./component/ProtectedRoute"; 
 
 const App = () => {
   return (
