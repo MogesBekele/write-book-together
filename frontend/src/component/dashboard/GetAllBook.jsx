@@ -4,21 +4,26 @@ import axios from "axios";
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
+        setLoading(true); // Set loading to true before fetching
         const res = await axios.get("http://localhost:4000/api/book");
         setBooks(res.data);
+        setError(null); // Clear any previous errors
       } catch (err) {
         console.error("Failed to load books:", err);
         setError(err.response?.data?.message || "Failed to load books");
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
     fetchBooks();
   }, []);
 
-  if (error)
+  if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
@@ -32,23 +37,31 @@ const GetAllBook = () => {
         </div>
       </div>
     );
+  }
 
-  if (!books.length)
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
           <p className="text-gray-500 font-medium text-lg mb-4">
             Loading books...
           </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-          >
-            Retry
-          </button>
         </div>
       </div>
     );
+  }
+
+  if (!books.length) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-center">
+          <p className="text-gray-500 font-medium text-lg mb-4">
+            No books available.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
