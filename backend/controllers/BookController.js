@@ -81,15 +81,13 @@ export const addContribution = async (req, res) => {
     await book.save();
 
     // Populate the contributor's username in the response
-    const populatedContribution = await book.populate({
-      path: "contributions.contributor",
-      select: "username", // Only include the username field
-    });
+    const populatedBook = await Book.findById(bookId).populate(
+      "contributions.contributor",
+      "username"
+    );
 
     const newContribution =
-      populatedContribution.contributions[
-        populatedContribution.contributions.length - 1
-      ]; // Get the last added contribution
+      populatedBook.contributions[populatedBook.contributions.length - 1]; // Get the last added contribution
 
     res.status(201).json(newContribution); // Return the new contribution with username
   } catch (err) {
