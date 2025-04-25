@@ -4,7 +4,6 @@ import axios from "axios";
 import Loading from "../Loading";
 import Contribution from "./Contribution"; // Import Contribution component
 
-
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
   const navigate = useNavigate(); // For navigation
@@ -34,6 +33,14 @@ const BookDetail = () => {
     } finally {
       setLoading(false); // Set loading to false after fetching
     }
+  };
+
+  // Handle new contributions
+  const handleContributionAdded = (newContribution) => {
+    setBook((prevBook) => ({
+      ...prevBook,
+      contributions: [...prevBook.contributions, newContribution],
+    }));
   };
 
   // useEffect to call fetchBook
@@ -72,6 +79,11 @@ const BookDetail = () => {
       ) : (
         <p className="text-gray-500">No contributions yet.</p>
       )}
+      {/* Add Contribution Component */}
+      <Contribution
+        bookId={bookId}
+        onContributionAdded={handleContributionAdded}
+      />
     </div>
   );
 };
