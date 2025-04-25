@@ -30,6 +30,7 @@ export const addBook = async (req, res) => {
 
 export const getAllBooks = async (req, res) => {
   try {
+
     console.log("Fetching all books..."); // Debug log
     const books = await Book.find().populate("createdBy", "username");
     console.log("Books fetched successfully:", books); // Debug log
@@ -79,7 +80,18 @@ export const addContribution = async (req, res) => {
     book.contributions.push(contribution);
     await book.save();
 
-    res.status(201).json(contribution); // Return the new contribution
+    // Populate the contributor's username in the response
+    const populatedContribution = await book.populate({
+      path: "contributions.contributor",
+      select: "username", // Only include the username field
+    });
+
+    const newContribution =
+      populatedContribution.contributions[
+        populatedContribution.contributions.length - 1
+      ]; // Get the last added contribution
+
+    res.status(201).json(newContribution); // Return the new contribution with username
   } catch (err) {
     console.error("Error adding contribution:", err);
     res.status(500).json({ message: "Failed to add contribution." });
