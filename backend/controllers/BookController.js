@@ -53,3 +53,35 @@ export const getBookById = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch book", error: err });
   }
 };
+
+
+
+// Add a contribution to a book
+export const addContribution = async (req, res) => {
+  const { bookId } = req.params; // Extract bookId from the URL
+  const { text } = req.body; // Extract contribution text from the request body
+
+  if (!text || text.trim() === "") {
+    return res.status(400).json({ message: "Contribution text is required." });
+  }
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    // Add the contribution to the book
+    const contribution = {
+      text,
+      contributor: req.userId, // Use the userId from the authentication middleware
+    };
+    book.contributions.push(contribution);
+    await book.save();
+
+    res.status(201).json(contribution); // Return the new contribution
+  } catch (err) {
+    console.error("Error adding contribution:", err);
+    res.status(500).json({ message: "Failed to add contribution." });
+  }
+};

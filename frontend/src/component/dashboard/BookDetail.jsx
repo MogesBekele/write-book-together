@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
+import Contribution from "./Contribution"; // Import Contribution component
+
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
