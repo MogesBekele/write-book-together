@@ -49,11 +49,12 @@ export const getBookById = async (req, res) => {
       .populate("createdBy", "username") // Populate the creator's username
       .populate("contributions.contributor", "username"); // Populate contributors' usernames
 
+    console.log("Populated Book:", book); // Debug log
+
     if (!book) {
       return res.status(404).json({ message: "Book not found." });
     }
 
-    console.log("Book fetched successfully:", book); // Debug log
     res.status(200).json(book);
   } catch (err) {
     console.error("Error fetching book details:", err); // Debug log
