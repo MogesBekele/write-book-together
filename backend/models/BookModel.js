@@ -1,17 +1,32 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const ContributionSchema = new mongoose.Schema({
-  text: { type: String, required: true },
-  contributor: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to the User model
+const bookSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  contributions: [
+    {
+      text: String,
+      contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      date: { type: Date, default: Date.now }
+    }
+  ]
+}, {
+  timestamps: true
 });
 
-const BookSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to the User model
-  contributions: [ContributionSchema], // Array of contributions
-});
-
-const Book = mongoose.model("Book", BookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 export default Book;
+

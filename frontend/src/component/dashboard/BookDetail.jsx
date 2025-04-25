@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify"; // Import toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import Loading from "../Loading";
-import Contribution from "./Contribution"; // Import Contribution component
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
@@ -37,15 +34,6 @@ const BookDetail = () => {
     }
   };
 
-  // Handle new contributions
-  const handleContributionAdded = (newContribution) => {
-    setBook((prevBook) => ({
-      ...prevBook,
-      contributions: [...prevBook.contributions, newContribution],
-    }));
-    toast.success("Contribution added successfully!"); // Show success toast
-  };
-
   // useEffect to call fetchBook
   useEffect(() => {
     fetchBook();
@@ -56,7 +44,6 @@ const BookDetail = () => {
   }
 
   if (error) {
-    toast.error(error); // Show error toast
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <p className="text-red-500 font-medium text-lg">{error}</p>
@@ -72,22 +59,17 @@ const BookDetail = () => {
         Contributions
       </h2>
       {book.contributions?.length > 0 ? (
-  book.contributions.map((contribution, index) => (
-    <div key={index} className="mb-4">
-      <p className="text-gray-600">{contribution.text}</p>
-      <small className="text-gray-500">
-        By {contribution.contributor?.username || "Unknown"}
-      </small>
-    </div>
-  ))
-) : (
-  <p className="text-gray-500">No contributions yet.</p>
-)}
-      {/* Add Contribution Component */}
-      <Contribution
-        bookId={bookId}
-        onContributionAdded={handleContributionAdded}
-      />
+        book.contributions.map((contribution, index) => (
+          <div key={index} className="mb-4">
+            <p className="text-gray-600">{contribution.text}</p>
+            <small className="text-gray-500">
+              By {contribution.contributor?.username || "Unknown"}
+            </small>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">No contributions yet.</p>
+      )}
     </div>
   );
 };
