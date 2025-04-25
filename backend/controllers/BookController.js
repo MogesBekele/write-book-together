@@ -71,7 +71,7 @@ export const addContribution = async (req, res) => {
   const { text } = req.body; // Extract contribution text from the request body
 
   if (!text || text.trim() === "") {
-    return res.status(400).json({ message: "Contribution text is required." });
+    return res.status(400).json({ message: "Contribution text cannot be empty." });
   }
 
   try {
@@ -96,6 +96,8 @@ export const addContribution = async (req, res) => {
 
     const newContribution =
       populatedBook.contributions[populatedBook.contributions.length - 1]; // Get the last added contribution
+
+    console.log("New Contribution with Populated Username:", newContribution); // Debug log
 
     res.status(201).json(newContribution); // Return the new contribution with username
   } catch (err) {
