@@ -3,7 +3,7 @@ import express from "express";
 import {
   addContribution,
   getContributionsByBook,
-} from "../controllers/contributionController.js";
+} from "../controllers/ContributionController.js";
 
 const router = express.Router(); // Properly declare the router
 
