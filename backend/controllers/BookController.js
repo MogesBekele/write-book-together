@@ -1,5 +1,4 @@
 import Book from "../models/BookModel.js";
-
 export const addBook = async (req, res) => {
   try {
     console.log("Request body:", req.body); // Debug log
@@ -15,7 +14,8 @@ export const addBook = async (req, res) => {
     const book = new Book({
       title,
       description,
-      createdBy: req.userId,
+      createdBy: req.userId, // User who created the book
+      admin: req.userId, // Set the admin to the user creating the book
     });
 
     await book.save();
@@ -26,7 +26,6 @@ export const addBook = async (req, res) => {
     res.status(500).json({ error: "Failed to add book" });
   }
 };
-
 
 export const getAllBooks = async (req, res) => {
   try {
