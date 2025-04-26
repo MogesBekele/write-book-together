@@ -1,7 +1,7 @@
 // middleware/verifyToken.js
 import jwt from "jsonwebtoken";
 
-const verifyToken = (req, res, next) => {
+const VerifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -27,4 +27,4 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-export default verifyToken;
+export default VerifyToken;

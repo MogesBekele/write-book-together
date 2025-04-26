@@ -1,5 +1,5 @@
 import express from "express";
-import verifyToken from "../middleware/VerifyToken.js";
+import VerifyToken from "../middleware/VerifyToken.js"; // Ensure the file name matches exactly
 import {
   addBook,
   getAllBooks,
@@ -9,8 +9,8 @@ import {
 const router = express.Router();
 
 // Book Routes
-router.post("/add", verifyToken, addBook); // Add a new book
-router.get("/", verifyToken,  getAllBooks); // Get all books
-router.get("/:bookId", verifyToken, getBookById); // Get a book by ID
+router.post("/add", VerifyToken, addBook); // Add a new book
+router.get("/", VerifyToken, getAllBooks); // Get all books
+router.get("/:bookId", VerifyToken, getBookById); // Get a book by ID
 
 export default router;
