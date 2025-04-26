@@ -6,6 +6,7 @@ import Loading from "../Loading"; // Import the Loading component
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedBooks, setExpandedBooks] = useState({}); // Track expanded state for each book
   const toastShown = useRef(false); // Ref to track if toast has been shown
 
   // Fetch books function
@@ -47,6 +48,14 @@ const GetAllBook = () => {
       : text;
   };
 
+  // Toggle expanded state for a specific book
+  const toggleExpanded = (bookId) => {
+    setExpandedBooks((prevState) => ({
+      ...prevState,
+      [bookId]: !prevState[bookId], // Toggle the expanded state for the specific book
+    }));
+  };
+
   // useEffect to call fetchBooks
   useEffect(() => {
     fetchBooks();
@@ -73,7 +82,7 @@ const GetAllBook = () => {
       <h2 className="text-4xl font-bold text-center text-blue-700 mb-10">
         All Books
       </h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {books.map((book) => (
           <li
             key={book._id}
@@ -84,14 +93,19 @@ const GetAllBook = () => {
                 {book.title || "Untitled Book"}
               </h3>
               <p className="text-gray-600 mb-4">
-                {limitWords(
-                  book.description || "No description available.",
-                  20
-                )}
+                {expandedBooks[book._id]
+                  ? book.description || "No description available."
+                  : limitWords(
+                      book.description || "No description available.",
+                      20
+                    )}
               </p>
             </div>
-            <button className="mt-auto bg-gradient-to-r from-blue-500 to-blue-700 text-white py-1 px-3 rounded-md text-sm hover:from-blue-600 hover:to-blue-800 transition-all shadow-md hover:shadow-lg">
-              See More
+            <button
+              className="mt-auto bg-gradient-to-r from-blue-500 to-blue-700 text-white py-1 px-3 rounded-md text-sm hover:from-blue-600 hover:to-blue-800 transition-all shadow-md hover:shadow-lg"
+              onClick={() => toggleExpanded(book._id)} // Toggle description for this book
+            >
+              {expandedBooks[book._id] ? "Show Less" : "See More"}
             </button>
           </li>
         ))}
