@@ -62,7 +62,7 @@ const BookList = () => {
             key={book._id}
             className="flex items-center space-x-4 text-lg font-medium text-gray-800 hover:text-blue-600 cursor-pointer"
             onClick={() => {
-              toast.info(`Navigating to book: ${book.title}`); // Show info toast
+              toast.info(`Navigating to book: ${book.title}`); 
               navigate(`/dashboard/book/${book._id}`); // Navigate to book details
             }}
           >
