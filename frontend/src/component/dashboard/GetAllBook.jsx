@@ -82,7 +82,7 @@ const GetAllBook = () => {
       <h2 className="text-4xl font-bold text-center text-blue-700 mb-10">
         All Books
       </h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {books.map((book) => (
           <li
             key={book._id}
