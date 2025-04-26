@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../Loading";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -30,18 +31,28 @@ const BookList = () => {
     fetchBooks();
   }, []);
 
-  if (loading) return <p>Loading books...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading)
+    return (
+    <Loading/>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-lg font-medium text-red-500">{error}</p>
+      </div>
+    );
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Books</h1>
-      <ul>
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <h1 className="text-4xl font-bold text-blue-700 mb-8 text-center">
+        Book Titles
+      </h1>
+      <ul className="space-y-4">
         {books.map((book) => (
           <li
             key={book._id}
-            className="text-blue-600 hover:underline cursor-pointer mb-4"
-            onClick={() => navigate(`/dashboard/book/${book._id}`)} // Updated path to match App.jsx
+            className="text-lg font-medium text-blue-600 hover:underline cursor-pointer"
+            onClick={() => navigate(`/dashboard/book/${book._id}`)} // Navigate to book details
           >
             {book.title}
           </li>
