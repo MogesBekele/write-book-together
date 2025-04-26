@@ -48,20 +48,27 @@ const BookList = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-blue-700 mb-8 text-center">
+      <h1 className="text-4xl font-bold text-blue-700 mb-4 text-center">
         Book Titles
       </h1>
+      <h6 className="text-lg font-medium text-gray-600 mb-8 text-center">
+        Explore the available niches and contribute your knowledge to the ones
+        that inspire you.
+      </h6>
+
       <ul className="space-y-4">
         {books.map((book) => (
           <li
             key={book._id}
-            className="text-lg font-medium text-blue-600 hover:underline cursor-pointer"
+            className="flex items-center space-x-4 text-lg font-medium text-gray-800 hover:text-blue-600 cursor-pointer"
             onClick={() => {
               toast.info(`Navigating to book: ${book.title}`); // Show info toast
               navigate(`/dashboard/book/${book._id}`); // Navigate to book details
             }}
           >
-            {book.title}
+            <span className="w-3 h-3 bg-blue-500 rounded-full"></span>{" "}
+            {/* Bullet */}
+            <span>{book.title}</span>
           </li>
         ))}
       </ul>
