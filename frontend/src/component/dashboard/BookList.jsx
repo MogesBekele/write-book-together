@@ -42,32 +42,31 @@ const BookList = () => {
   if (error)
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-lg font-medium text-red-500">{error}</p>
+        <p className="text-2xl font-bold text-red-500">{error}</p>
       </div>
     );
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-blue-700 mb-4 text-center">
+    <div className="p-16 bg-gray-50 min-h-screen">
+      <h1 className="text-6xl font-extrabold text-blue-700 mb-8 text-center">
         Book Titles
       </h1>
-      <h6 className="text-lg font-medium text-gray-600 mb-8 text-center">
-        Explore the available niches and contribute your knowledge to the ones
-        that inspire you.
+      <h6 className="text-2xl font-medium text-gray-700 mb-12 text-center">
+        Discover a variety of niches and share your expertise to inspire others.
       </h6>
 
-      <ul className="space-y-4">
+      <ul className="space-y-8">
         {books.map((book) => (
           <li
             key={book._id}
-            className="flex items-center space-x-4 text-lg font-medium text-gray-800 hover:text-blue-600 cursor-pointer"
+            className="flex items-center space-x-8 text-2xl font-bold text-gray-800 hover:text-blue-600 cursor-pointer"
             onClick={() => {
-              toast.info(`Navigating to book: ${book.title}`); 
+              toast.info(`Navigating to book: ${book.title}`);
               navigate(`/dashboard/book/${book._id}`); // Navigate to book details
             }}
           >
-            <span className="w-3 h-3 bg-blue-500 rounded-full"></span>{" "}
-            {/* Bullet */}
+            <span className="w-6 h-6 bg-blue-500 rounded-full"></span>{" "}
+            {/* Larger Bullet */}
             <span>{book.title}</span>
           </li>
         ))}
