@@ -17,7 +17,6 @@ import AddBook from "./component/dashboard/AddBook";
 import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
 import ProtectedRoute from "./component/ProtectedRoute"; 
-import Contribution from "./component/dashboard/Contribution";
 
 const App = () => {
   return (
@@ -47,7 +46,6 @@ const App = () => {
             <Route path="settings" element={<Settings />} />
             <Route path="get-all-books" element={<GetAllBook />} />
             <Route path="bookdetails/:bookId" element={<BookDetail />} />
-            <Route path="contribution" element={<Contribution />} />
             {/* Add this route */}
           </Route>
         </Routes>
