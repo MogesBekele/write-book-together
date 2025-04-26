@@ -51,7 +51,7 @@ const BookList = () => {
       <h1 className="text-6xl font-extrabold text-blue-700 mb-8 text-center">
         Book Titles
       </h1>
-      <h6 className="text-2xl font-medium text-gray-700 mb-12 text-center">
+      <h6 className="text-3xl font-semibold text-gray-700 mb-12 text-center">
         Discover a variety of niches and share your expertise to inspire others.
       </h6>
 
