@@ -6,7 +6,6 @@ import morgan from "morgan"; // For request logging
 import UserRoute from "./routes/UserRoute.js";
 import BookRoute from "./routes/BookRoute.js";
 import connectDB from "./config/db.js";
-import ContributionRoute from "./routes/ContributionRoute.js"; // Import the contribution route
 
 dotenv.config(); // Load environment variables
 
@@ -26,7 +25,6 @@ connectDB();
 // API routes
 app.use("/api/user", UserRoute);
 app.use("/api/book", BookRoute);
-app.use("/api/contribution", ContributionRoute); // Fix the typo here
 
 // 404 Handler
 app.use((req, res) => {
