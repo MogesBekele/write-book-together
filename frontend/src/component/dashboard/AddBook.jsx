@@ -32,7 +32,7 @@ const AddBook = () => {
 
   return (
     <div className="w-full min-h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Add a New Book
         </h2>
