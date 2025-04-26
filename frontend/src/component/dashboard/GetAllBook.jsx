@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import Loading from "../Loading"; // Import the Loading component
 
 const GetAllBook = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const toastShown = useRef(false); // Ref to track if toast has been shown
 
   // Fetch books function
@@ -39,6 +37,14 @@ const GetAllBook = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Function to limit the number of words in a string
+  const limitWords = (text, wordLimit) => {
+    const words = text.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : text;
   };
 
   // useEffect to call fetchBooks
@@ -78,14 +84,14 @@ const GetAllBook = () => {
                 {book.title || "Untitled Book"}
               </h3>
               <p className="text-gray-600 mb-4">
-                {book.description || "No description available."}
+                {limitWords(
+                  book.description || "No description available.",
+                  20
+                )}
               </p>
             </div>
-            <button
-              className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-              onClick={() => navigate(`/dashboard/bookdetails/${book._id}`)}
-            >
-              View Details
+            <button className="mt-auto bg-gradient-to-r from-blue-500 to-blue-700 text-white py-1 px-3 rounded-md text-sm hover:from-blue-600 hover:to-blue-800 transition-all shadow-md hover:shadow-lg">
+              See More
             </button>
           </li>
         ))}
