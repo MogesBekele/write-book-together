@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
+import { toast } from "react-toastify"; // Import toast
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -22,6 +23,7 @@ const BookList = () => {
     } catch (err) {
       console.error("Failed to fetch books:", err);
       setError(err.response?.data?.message || "Failed to load books.");
+      toast.error(err.response?.data?.message || "Failed to load books."); // Show error toast
     } finally {
       setLoading(false);
     }
@@ -33,7 +35,9 @@ const BookList = () => {
 
   if (loading)
     return (
-    <Loading/>
+      <div className="flex items-center justify-center min-h-screen">
+        <Loading />
+      </div>
     );
   if (error)
     return (
@@ -52,7 +56,10 @@ const BookList = () => {
           <li
             key={book._id}
             className="text-lg font-medium text-blue-600 hover:underline cursor-pointer"
-            onClick={() => navigate(`/dashboard/book/${book._id}`)} // Navigate to book details
+            onClick={() => {
+              toast.info(`Navigating to book: ${book.title}`); // Show info toast
+              navigate(`/dashboard/book/${book._id}`); // Navigate to book details
+            }}
           >
             {book.title}
           </li>
