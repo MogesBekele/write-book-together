@@ -26,7 +26,7 @@ connectDB();
 // API routes
 app.use("/api/user", UserRoute);
 app.use("/api/book", BookRoute);
-app.use("/api/contributions", ContributionRoute); // Fix the typo here
+app.use("/api/contribution", ContributionRoute); // Fix the typo here
 
 // 404 Handler
 app.use((req, res) => {
