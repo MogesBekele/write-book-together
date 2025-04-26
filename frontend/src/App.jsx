@@ -16,7 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import AddBook from "./component/dashboard/AddBook";
 import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
-import ProtectedRoute from "./component/ProtectedRoute"; 
+import ProtectedRoute from "./component/ProtectedRoute";
+import BookList from "./component/dashboard/BookList";
 
 const App = () => {
   return (
@@ -45,8 +46,9 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
             <Route path="get-all-books" element={<GetAllBook />} />
-            <Route path="bookdetails/:bookId" element={<BookDetail />} />
-            {/* Add this route */}
+            <Route path="book/:bookId" element={<BookDetail />} />{" "}
+            {/* Keep this route */}
+            <Route path="booklist" element={<BookList />} />
           </Route>
         </Routes>
       </Router>

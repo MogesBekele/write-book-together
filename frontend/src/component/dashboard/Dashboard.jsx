@@ -30,6 +30,16 @@ const Dashboard = () => {
           >
             Get All Books
           </NavLink>
+          <NavLink
+            to="booklist"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-purple-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+            }
+          >
+            Book List
+          </NavLink>
        
         </nav>
       </div>
