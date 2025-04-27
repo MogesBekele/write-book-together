@@ -62,7 +62,7 @@ const BookList = () => {
             className="flex items-center space-x-8 text-2xl font-bold text-gray-800 hover:text-blue-600 cursor-pointer"
             onClick={() => {
               toast.info(`Navigating to book: ${book.title}`);
-              navigate(`/dashboard/book/${book._id}`); // Navigate to book details
+              navigate(`/dashboard/book/${book._id}`); 
             }}
           >
             <span className="w-6 h-6 bg-blue-500 rounded-full"></span>{" "}
