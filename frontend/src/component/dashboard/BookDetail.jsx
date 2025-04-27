@@ -14,24 +14,25 @@ const BookDetail = () => {
   // Fetch book details function
   const fetchBook = async () => {
     try {
-      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const token = localStorage.getItem("token");
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Add Authorization header
+          Authorization: `Bearer ${token}`,
         },
       });
-      setBook(res.data); // Set the book data
-      setError(null); // Clear any previous errors
+      console.log("Fetched Book Data:", res.data); // Debug log
+      setBook(res.data);
+      setError(null);
     } catch (err) {
       console.error("Failed to fetch book:", err);
       if (err.response?.status === 401) {
         setError("You are not authorized. Please log in.");
-        navigate("/login"); // Redirect to login page
+        navigate("/login");
       } else {
         setError(err.response?.data?.message || "Failed to load book details.");
       }
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     }
   };
 
@@ -68,17 +69,17 @@ const BookDetail = () => {
         Contributions
       </h2>
       {book.contributions?.length > 0 ? (
-        book.contributions.map((contribution, index) => (
-          <div key={index} className="mb-4">
-            <p className="text-gray-600">{contribution.text}</p>
-            <small className="text-gray-500">
-              By {contribution.contributor?.username || "Unknown"}
-            </small>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500">No contributions yet.</p>
-      )}
+  book.contributions.map((contribution, index) => (
+    <div key={index} className="mb-4">
+      <p className="text-gray-600">{contribution.text}</p>
+      <small className="text-gray-500">
+        By {contribution.contributor?.username || "Unknown"}
+      </small>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500">No contributions yet.</p>
+)}
 
       {/* Add Contribution Component */}
       <Contribution bookId={bookId} onNewContribution={addNewContribution} />
