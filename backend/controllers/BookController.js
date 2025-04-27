@@ -27,7 +27,6 @@ export const addBook = async (req, res) => {
   }
 };
 
-
 export const getAllBooks = async (req, res) => {
   try {
     console.log("Fetching all books..."); // Debug log
@@ -39,11 +38,14 @@ export const getAllBooks = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch books", error: err });
   }
 };
+
 export const getBookById = async (req, res) => {
   const { bookId } = req.params;
 
   try {
-    const book = await Book.findById(bookId).populate("createdBy", "username").populate("contributions.contributor", "username");
+    const book = await Book.findById(bookId)
+      .populate("createdBy", "username")
+      .populate("contributions.contributor", "username");
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
@@ -51,5 +53,59 @@ export const getBookById = async (req, res) => {
   } catch (err) {
     console.error("Error fetching book by ID:", err);
     res.status(500).json({ message: "Failed to fetch book", error: err });
+  }
+};
+
+// Add a contribution to a book
+export const addContribution = async (req, res) => {
+  const { bookId } = req.params;
+  const { text } = req.body;
+
+  if (!text || text.trim() === "") {
+    return res.status(400).json({ message: "Contribution text is required." });
+  }
+
+  try {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    const contribution = {
+      text,
+      contributor: req.userId, // Assuming `req.userId` is populated by auth middleware
+    };
+
+    book.contributions.push(contribution); // Add the contribution to the book
+    await book.save(); // Save the updated book
+
+    res
+      .status(201)
+      .json({ message: "Contribution added successfully.", contribution });
+  } catch (error) {
+    console.error("Error adding contribution:", error);
+    res.status(500).json({ message: "Failed to add contribution." });
+  }
+};
+
+// Get contributions for a book
+export const getContributions = async (req, res) => {
+  const { bookId } = req.params;
+
+  try {
+    const book = await Book.findById(bookId).populate(
+      "contributions.contributor",
+      "username"
+    );
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    res.status(200).json(book.contributions);
+  } catch (error) {
+    console.error("Error fetching contributions:", error);
+    res.status(500).json({ message: "Failed to fetch contributions." });
   }
 };
