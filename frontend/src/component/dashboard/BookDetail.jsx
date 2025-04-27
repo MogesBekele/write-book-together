@@ -6,7 +6,7 @@ import Contribution from "./Contribution"; // Import the Contribution component
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate();
   const [book, setBook] = useState(null); // State to store book details
   const [loading, setLoading] = useState(true); // State to track loading
   const [error, setError] = useState(null); // State to handle errors
