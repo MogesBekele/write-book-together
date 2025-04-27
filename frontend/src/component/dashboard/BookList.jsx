@@ -8,7 +8,6 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [contribution, setContribution] = useState(""); // State for user contribution
   const navigate = useNavigate(); // Use navigate for routing
 
   const fetchBooks = async () => {
@@ -29,8 +28,6 @@ const BookList = () => {
       setLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     fetchBooks();
@@ -57,9 +54,6 @@ const BookList = () => {
       <h6 className="text-3xl font-semibold text-gray-700 mb-12 text-center">
         Discover a variety of niches and share your expertise to inspire others.
       </h6>
-
-      {/* Contribution Form */}
-
 
       <ul className="space-y-8">
         {books.map((book) => (

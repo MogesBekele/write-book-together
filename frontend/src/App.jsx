@@ -18,6 +18,7 @@ import BookDetail from "./component/dashboard/BookDetail";
 import GetAllBook from "./component/dashboard/GetAllBook";
 import ProtectedRoute from "./component/ProtectedRoute";
 import BookList from "./component/dashboard/BookList";
+import Contribution from "./component/dashboard/Contribution";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="book/:bookId" element={<BookDetail />} />{" "}
             {/* Keep this route */}
             <Route path="booklist" element={<BookList />} />
+            <Route path="contribution" element={<Contribution />} />
           </Route>
         </Routes>
       </Router>

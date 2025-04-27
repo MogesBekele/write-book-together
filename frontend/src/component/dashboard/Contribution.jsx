@@ -1,6 +1,9 @@
-import React from 'react'
+import React from "react";
+import { useState } from "react";
 
 const Contribution = () => {
+  const [contribution, setContribution] = useState(""); // State for contribution text
+
   const handleContributionSubmit = async (e) => {
     e.preventDefault();
     if (!contribution.trim()) {
@@ -28,30 +31,29 @@ const Contribution = () => {
   };
   return (
     <div>
-
-            <form
-              onSubmit={handleContributionSubmit}
-              className="mb-12 max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6"
-            >
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-                Add Your Contribution
-              </h2>
-              <textarea
-                value={contribution}
-                onChange={(e) => setContribution(e.target.value)}
-                placeholder="Write your contribution here..."
-                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
-              ></textarea>
-              <button
-                type="submit"
-                className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all"
-              >
-                Submit Contribution
-              </button>
-            </form>
+      <form
+        onSubmit={handleContributionSubmit}
+        className="mb-12 max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6"
+      >
+        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+          Add Your Contribution
+        </h2>
+        <textarea
+          value={contribution}
+          onChange={(e) => setContribution(e.target.value)}
+          placeholder="Write your contribution here..."
+          className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows="4"
+        ></textarea>
+        <button
+          type="submit"
+          className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all"
+        >
+          Submit Contribution
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Contribution
+export default Contribution;
