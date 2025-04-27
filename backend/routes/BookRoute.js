@@ -4,6 +4,8 @@ import {
   addBook,
   getAllBooks,
   getBookById,
+  addContribution,
+  getContributions,
 } from "../controllers/BookController.js";
 
 const router = express.Router();
@@ -12,5 +14,9 @@ const router = express.Router();
 router.post("/add", VerifyToken, addBook); // Add a new book
 router.get("/", VerifyToken, getAllBooks); // Get all books
 router.get("/:bookId", VerifyToken, getBookById); // Get a book by ID
+
+// Contribution Routes
+router.post("/:bookId/contributions", VerifyToken, addContribution); // Add a contribution to a book
+router.get("/:bookId/contributions", VerifyToken, getContributions); // Get contributions for a book
 
 export default router;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Contribution = () => {
+const Contribution = ({ bookId }) => {
   const [contribution, setContribution] = useState(""); // State for contribution text
   const [loading, setLoading] = useState(false); // Loading state
 
@@ -17,7 +17,7 @@ const Contribution = () => {
       setLoading(true); // Set loading state
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:4000/api/contribution",
+        `http://localhost:4000/api/book/${bookId}/contributions`, // Updated API endpoint
         { text: contribution },
         {
           headers: {
