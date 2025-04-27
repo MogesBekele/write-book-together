@@ -35,6 +35,14 @@ const BookDetail = () => {
     }
   };
 
+  // Add a new contribution to the list
+  const addNewContribution = (newContribution) => {
+    setBook((prevBook) => ({
+      ...prevBook,
+      contributions: [newContribution, ...prevBook.contributions], // Add new contribution to the top
+    }));
+  };
+
   // useEffect to call fetchBook
   useEffect(() => {
     fetchBook();
@@ -73,7 +81,7 @@ const BookDetail = () => {
       )}
 
       {/* Add Contribution Component */}
-      <Contribution bookId={bookId} />
+      <Contribution bookId={bookId} onNewContribution={addNewContribution} />
     </div>
   );
 };

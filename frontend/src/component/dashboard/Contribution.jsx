@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Contribution = ({ bookId }) => {
+const Contribution = ({ bookId, onNewContribution }) => {
   const [contribution, setContribution] = useState(""); // State for contribution text
   const [loading, setLoading] = useState(false); // Loading state
 
@@ -16,7 +16,7 @@ const Contribution = ({ bookId }) => {
     try {
       setLoading(true); // Set loading state
       const token = localStorage.getItem("token");
-      await axios.post(
+      const res = await axios.post(
         `http://localhost:4000/api/book/${bookId}/contributions`, // Updated API endpoint
         { text: contribution },
         {
@@ -27,6 +27,11 @@ const Contribution = ({ bookId }) => {
       );
       toast.success("Contribution added successfully!");
       setContribution(""); // Clear the input field
+
+      // Call the callback to update the contributions list
+      if (onNewContribution) {
+        onNewContribution(res.data.contribution);
+      }
     } catch (err) {
       console.error("Failed to add contribution:", err);
       toast.error(err.response?.data?.message || "Failed to add contribution.");
