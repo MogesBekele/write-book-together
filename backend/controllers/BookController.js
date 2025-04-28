@@ -75,7 +75,7 @@ export const addContribution = async (req, res) => {
 
     const contribution = {
       text,
-      contributor: req.userId, // Assuming `req.userId` is populated by auth middleware
+      contributor: req.user._id, // Assuming `req.user` is populated by auth middleware
     };
 
     book.contributions.push(contribution); // Add the contribution to the book
@@ -88,9 +88,30 @@ export const addContribution = async (req, res) => {
     );
 
     const newContribution = populatedBook.contributions.pop(); // Get the last added contribution
-    res.status(201).json({ message: "Contribution added successfully.", contribution: newContribution });
+    res.status(201).json({ contribution: newContribution });
   } catch (error) {
     console.error("Error adding contribution:", error);
     res.status(500).json({ message: "Failed to add contribution." });
+  }
+};
+
+// Get contributions for a book
+export const getContributions = async (req, res) => {
+  const { bookId } = req.params;
+
+  try {
+    const book = await Book.findById(bookId).populate(
+      "contributions.contributor",
+      "username"
+    );
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    res.status(200).json(book.contributions);
+  } catch (error) {
+    console.error("Error fetching contributions:", error);
+    res.status(500).json({ message: "Failed to fetch contributions." });
   }
 };
