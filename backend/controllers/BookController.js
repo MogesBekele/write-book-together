@@ -81,32 +81,16 @@ export const addContribution = async (req, res) => {
     book.contributions.push(contribution); // Add the contribution to the book
     await book.save(); // Save the updated book
 
-    res
-      .status(201)
-      .json({ message: "Contribution added successfully.", contribution });
-  } catch (error) {
-    console.error("Error adding contribution:", error);
-    res.status(500).json({ message: "Failed to add contribution." });
-  }
-};
-
-// Get contributions for a book
-export const getContributions = async (req, res) => {
-  const { bookId } = req.params;
-
-  try {
-    const book = await Book.findById(bookId).populate(
+    // Populate the newly added contribution with the contributor's username
+    const populatedBook = await Book.findById(bookId).populate(
       "contributions.contributor",
       "username"
     );
 
-    if (!book) {
-      return res.status(404).json({ message: "Book not found." });
-    }
-
-    res.status(200).json(book.contributions);
+    const newContribution = populatedBook.contributions.pop(); // Get the last added contribution
+    res.status(201).json({ message: "Contribution added successfully.", contribution: newContribution });
   } catch (error) {
-    console.error("Error fetching contributions:", error);
-    res.status(500).json({ message: "Failed to fetch contributions." });
+    console.error("Error adding contribution:", error);
+    res.status(500).json({ message: "Failed to add contribution." });
   }
 };
