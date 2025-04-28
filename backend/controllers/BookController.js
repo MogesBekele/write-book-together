@@ -75,20 +75,15 @@ export const addContribution = async (req, res) => {
 
     const contribution = {
       text,
-      contributor: req.user._id, // Assuming `req.user` is populated by auth middleware
+      contributor: req.userId, // Assuming `req.userId` is populated by auth middleware
     };
 
     book.contributions.push(contribution); // Add the contribution to the book
     await book.save(); // Save the updated book
 
-    // Populate the newly added contribution with the contributor's username
-    const populatedBook = await Book.findById(bookId).populate(
-      "contributions.contributor",
-      "username"
-    );
-
-    const newContribution = populatedBook.contributions.pop(); // Get the last added contribution
-    res.status(201).json({ contribution: newContribution });
+    res
+      .status(201)
+      .json({ message: "Contribution added successfully.", contribution });
   } catch (error) {
     console.error("Error adding contribution:", error);
     res.status(500).json({ message: "Failed to add contribution." });
