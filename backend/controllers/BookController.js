@@ -39,12 +39,13 @@ export const getAllBooks = async (req, res) => {
   }
 };
 export const getBookById = async (req, res) => {
+  console.log("Authorization Header:", req.headers.authorization); // Debug log
   const { bookId } = req.params;
 
   try {
     const book = await Book.findById(bookId)
-      .populate("createdBy", "username") // Populate the creator's username
-      .populate("contributions.contributor", "username"); // Populate the contributor's username
+      .populate("createdBy", "username")
+      .populate("contributions.contributor", "username");
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
@@ -56,7 +57,6 @@ export const getBookById = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch book", error: err });
   }
 };
-
 // Add a contribution to a book
 export const addContribution = async (req, res) => {
   const { bookId } = req.params;
