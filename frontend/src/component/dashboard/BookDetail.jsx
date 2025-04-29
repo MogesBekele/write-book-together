@@ -26,17 +26,20 @@ const BookDetail = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Fetched Book Data:", res.data);
+     
       setBook(res.data);
       setError(null);
+      console.log("Fetched Book Data:", res.data);
     } catch (err) {
       console.error("Failed to fetch book:", err);
       if (err.response?.status === 401) {
         setError("You are not authorized. Please log in.");
         navigate("/login");
+        
       } else {
         setError(err.response?.data?.message || "Failed to load book details.");
       }
+      
     } finally {
       setLoading(false);
     }
