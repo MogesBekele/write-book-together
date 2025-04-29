@@ -5,19 +5,18 @@ import { toast } from "react-toastify";
 const Contribution = ({ bookId, onNewContribution }) => {
   const [contribution, setContribution] = useState(""); // State for contribution text
   const [loading, setLoading] = useState(false); // Loading state
-
   const handleContributionSubmit = async (e) => {
     e.preventDefault();
     if (!contribution.trim()) {
       toast.error("Contribution cannot be empty!");
       return;
     }
-
+  
     try {
       setLoading(true); // Set loading state
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `http://localhost:4000/api/book/${bookId}/contributions`, // Updated API endpoint
+        `http://localhost:4000/api/book/${bookId}/contributions`,
         { text: contribution },
         {
           headers: {
@@ -27,10 +26,10 @@ const Contribution = ({ bookId, onNewContribution }) => {
       );
       toast.success("Contribution added successfully!");
       setContribution(""); // Clear the input field
-
+  
       // Call the callback to update the contributions list
       if (onNewContribution) {
-        onNewContribution(res.data.contribution);
+        onNewContribution(res.data.contribution); // Pass the populated contribution
       }
     } catch (err) {
       console.error("Failed to add contribution:", err);
