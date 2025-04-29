@@ -75,17 +75,22 @@ const BookDetail = () => {
         Contributions
       </h2>
       {book.contributions?.length > 0 ? (
-        book.contributions.map((contribution, index) => (
-          <div key={index} className="mb-4">
-            <p className="text-gray-600">{contribution.text}</p>
-            <small className="text-gray-500">
-              By {contribution.contributor?.name || "Unknown"}
-            </small>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500">No contributions yet.</p>
-      )}
+  book.contributions.map((contribution, index) => (
+    <div key={index} className="mb-6 p-4 bg-white shadow-md rounded-lg border border-gray-200">
+      <p className="text-gray-800 text-lg font-medium mb-2">{contribution.text}</p>
+      <small className="text-gray-500 flex items-center">
+        <span className="inline-block bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full mr-2">
+          {contribution.contributor?.name || "Unknown"}
+        </span>
+        <span className="text-sm text-gray-400">
+          {new Date(contribution.date).toLocaleDateString()}
+        </span>
+      </small>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500">No contributions yet.</p>
+)}
 
       {/* Add Contribution Component */}
       <Contribution bookId={bookId} onNewContribution={addNewContribution} />
