@@ -18,7 +18,6 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,16 +25,17 @@ const Login = () => {
         "http://localhost:4000/api/user/login",
         formData
       );
-
+  
+      console.log("Login Response:", response.data); // Debug log
+  
       // Save the token and userId to localStorage
       localStorage.setItem("token", response.data.token); // Save token
       localStorage.setItem("userId", response.data.userId); // Save userId if needed
-
+  
       setMessage("Login successful!");
-      console.log(response.data); // Debug log
       setFormData({ email: "", password: "" }); // Clear form data after successful login
       toast.success("Login successful!"); // Show success message
-
+  
       navigate("/dashboard"); // Navigate after successful login
     } catch (error) {
       console.error("Login error:", error);
