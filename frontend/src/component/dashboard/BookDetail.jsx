@@ -80,10 +80,14 @@ const BookDetail = () => {
     <div
       key={index}
       className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
-        index % 2 === 0 ? "bg-white text-left" : "bg-gray-100 text-right"
+        index % 2 === 0 ? "bg-white" : "bg-gray-100"
       }`}
     >
-      <div className="flex justify-between items-center mb-2">
+      <div
+        className={`flex ${
+          index % 2 === 0 ? "justify-start" : "justify-end"
+        } items-center mb-2`}
+      >
         <span
           className={`inline-block font-semibold px-2 py-1 rounded-full ${
             index % 2 === 0
@@ -93,11 +97,17 @@ const BookDetail = () => {
         >
           {contribution.contributor?.name || "Unknown"}
         </span>
-        <span className="text-sm text-gray-400">
+        <span className="text-sm text-gray-400 ml-4">
           {new Date(contribution.date).toLocaleDateString()}
         </span>
       </div>
-      <p className="text-gray-800 text-lg font-medium">{contribution.text}</p>
+      <p
+        className={`text-gray-800 text-lg font-medium ${
+          index % 2 === 0 ? "text-left" : "text-right"
+        }`}
+      >
+        {contribution.text}
+      </p>
     </div>
   ))
 ) : (
