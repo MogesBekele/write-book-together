@@ -30,10 +30,7 @@ export const addBook = async (req, res) => {
 export const getAllBooks = async (req, res) => {
   try {
     console.log("Fetching all books..."); // Debug log
-    const books = await Book.find()
-      .populate("createdBy", "_id") // Only include the `_id` of the creator
-      .populate("contributions.contributor", "_id"); // Only include the `_id` of the contributor
-
+    const books = await Book.find().populate("createdBy", "username");
     console.log("Books fetched successfully:", books); // Debug log
     res.status(200).json(books);
   } catch (err) {
