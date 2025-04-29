@@ -83,13 +83,12 @@ const BookDetail = () => {
         index % 2 === 0 ? "bg-white text-left" : "bg-gray-100 text-right"
       }`}
     >
-      <p className="text-gray-800 text-lg font-medium mb-2">{contribution.text}</p>
-      <small className="text-gray-500 flex items-center justify-between">
+      <div className="flex justify-between items-center mb-2">
         <span
           className={`inline-block font-semibold px-2 py-1 rounded-full ${
             index % 2 === 0
-              ? "bg-blue-100 text-blue-700 mr-2"
-              : "bg-green-100 text-green-700 ml-2"
+              ? "bg-blue-100 text-blue-700"
+              : "bg-green-100 text-green-700"
           }`}
         >
           {contribution.contributor?.name || "Unknown"}
@@ -97,7 +96,8 @@ const BookDetail = () => {
         <span className="text-sm text-gray-400">
           {new Date(contribution.date).toLocaleDateString()}
         </span>
-      </small>
+      </div>
+      <p className="text-gray-800 text-lg font-medium">{contribution.text}</p>
     </div>
   ))
 ) : (
