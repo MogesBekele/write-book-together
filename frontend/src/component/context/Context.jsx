@@ -1,23 +1,20 @@
 import { createContext } from "react";
-const AppContext = createContext();
+import { useState } from "react";
+
+export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-    const value ={
-        title,
-        setTitle,
-        description,
-        setDescription,
-
-    }
-
-
+  const value = {
+    title,
+    setTitle,
+    description,
+    setDescription,
+  };
 
   return (
-    <AppContext.Provider value={{value}}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={{ value }}>{children}</AppContext.Provider>
   );
-}
+};
