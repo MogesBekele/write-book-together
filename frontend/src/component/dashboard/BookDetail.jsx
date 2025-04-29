@@ -47,7 +47,7 @@ const BookDetail = () => {
   const addNewContribution = (newContribution) => {
     setBook((prevBook) => ({
       ...prevBook,
-      contributions: [newContribution, ...prevBook.contributions], // Add new contribution to the top
+      contributions: [...prevBook.contributions, newContribution], // Add new contribution to the end
     }));
   };
 
@@ -77,10 +77,21 @@ const BookDetail = () => {
       </h2>
       {book.contributions?.length > 0 ? (
   book.contributions.map((contribution, index) => (
-    <div key={index} className="mb-6 p-4 bg-white shadow-md rounded-lg border border-gray-200">
+    <div
+      key={index}
+      className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
+        index % 2 === 0 ? "bg-white text-left" : "bg-gray-100 text-right"
+      }`}
+    >
       <p className="text-gray-800 text-lg font-medium mb-2">{contribution.text}</p>
-      <small className="text-gray-500 flex items-center">
-        <span className="inline-block bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full mr-2">
+      <small className="text-gray-500 flex items-center justify-between">
+        <span
+          className={`inline-block font-semibold px-2 py-1 rounded-full ${
+            index % 2 === 0
+              ? "bg-blue-100 text-blue-700 mr-2"
+              : "bg-green-100 text-green-700 ml-2"
+          }`}
+        >
           {contribution.contributor?.name || "Unknown"}
         </span>
         <span className="text-sm text-gray-400">
