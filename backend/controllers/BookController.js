@@ -44,8 +44,8 @@ export const getBookById = async (req, res) => {
 
   try {
     const book = await Book.findById(bookId)
-      .populate("createdBy", "username") // Populate the creator's username
-      .populate("contributions.contributor", "username"); // Populate the contributor's username
+      .populate("createdBy", "name") // Populate the creator's name
+      .populate("contributions.contributor", "name"); // Populate the contributor's name
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });

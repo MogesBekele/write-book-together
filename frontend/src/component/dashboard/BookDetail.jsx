@@ -13,13 +13,13 @@ const BookDetail = () => {
 
   const fetchBook = async () => {
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       setError("You are not logged in. Please log in.");
       navigate("/login"); // Redirect to login page
       return;
     }
-  
+
     try {
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
@@ -75,17 +75,17 @@ const BookDetail = () => {
         Contributions
       </h2>
       {book.contributions?.length > 0 ? (
-  book.contributions.map((contribution, index) => (
-    <div key={index} className="mb-4">
-      <p className="text-gray-600">{contribution.text}</p>
-      <small className="text-gray-500">
-        By {contribution.contributor?.username || "Unknown"}
-      </small>
-    </div>
-  ))
-) : (
-  <p className="text-gray-500">No contributions yet.</p>
-)}
+        book.contributions.map((contribution, index) => (
+          <div key={index} className="mb-4">
+            <p className="text-gray-600">{contribution.text}</p>
+            <small className="text-gray-500">
+              By {contribution.contributor?.name || "Unknown"}
+            </small>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">No contributions yet.</p>
+      )}
 
       {/* Add Contribution Component */}
       <Contribution bookId={bookId} onNewContribution={addNewContribution} />
