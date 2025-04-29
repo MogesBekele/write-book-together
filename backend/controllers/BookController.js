@@ -102,7 +102,7 @@ export const getContributions = async (req, res) => {
   try {
     const book = await Book.findById(bookId).populate(
       "contributions.contributor",
-      "username"
+      "name"
     );
 
     if (!book) {
