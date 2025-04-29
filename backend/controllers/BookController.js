@@ -39,7 +39,6 @@ export const getAllBooks = async (req, res) => {
   }
 };
 export const getBookById = async (req, res) => {
-  console.log("Authorization Header:", req.headers.authorization); // Debug log
   const { bookId } = req.params;
 
   try {
