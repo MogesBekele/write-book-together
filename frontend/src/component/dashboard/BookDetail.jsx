@@ -11,16 +11,22 @@ const BookDetail = () => {
   const [loading, setLoading] = useState(true); // State to track loading
   const [error, setError] = useState(null); // State to handle errors
 
-  // Fetch book details function
   const fetchBook = async () => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      setError("You are not logged in. Please log in.");
+      navigate("/login"); // Redirect to login page
+      return;
+    }
+  
     try {
-      const token = localStorage.getItem("token");
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Fetched Book Data:", res.data); // Debug log
+      console.log("Fetched Book Data:", res.data);
       setBook(res.data);
       setError(null);
     } catch (err) {
