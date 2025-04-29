@@ -39,6 +39,7 @@ export const getAllBooks = async (req, res) => {
   }
 };
 export const getBookById = async (req, res) => {
+
   const { bookId } = req.params;
 
   try {
@@ -80,9 +81,14 @@ export const addContribution = async (req, res) => {
     book.contributions.push(contribution); // Add the contribution to the book
     await book.save(); // Save the updated book
 
-    res
-      .status(201)
-      .json({ message: "Contribution added successfully.", contribution });
+    // Populate the newly added contribution with the contributor's name
+    const populatedBook = await Book.findById(bookId).populate(
+      "contributions.contributor",
+      "name"
+    );
+
+    const newContribution = populatedBook.contributions.pop(); // Get the last added contribution
+    res.status(201).json({ contribution: newContribution });
   } catch (error) {
     console.error("Error adding contribution:", error);
     res.status(500).json({ message: "Failed to add contribution." });
