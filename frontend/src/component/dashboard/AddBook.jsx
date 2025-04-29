@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,9 +5,8 @@ import { useContext } from "react";
 import { AppContext } from "../context/Context.jsx"; // Import the context
 
 const AddBook = () => {
-  const { title, setTitle,description, setDescription } = useContext(AppContext).value; // Use context to get title and description
-
-  const token = localStorage.getItem("token"); // or use context
+  const { title, setTitle, description, setDescription, token } =
+    useContext(AppContext).value; // Use context to get title and description
 
   const handleSubmit = async (e) => {
     e.preventDefault();
