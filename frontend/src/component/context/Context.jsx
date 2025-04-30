@@ -11,6 +11,11 @@ export const AppProvider = (Props) => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
   const [expandedBooks, setExpandedBooks] = useState({}); // Track expanded state for each book
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const token = localStorage.getItem("token"); // or use context
 
   const value = {
@@ -29,6 +34,8 @@ export const AppProvider = (Props) => {
     setError,
     expandedBooks,
     setExpandedBooks,
+    formData,
+    setFormData,
   };
 
   return (

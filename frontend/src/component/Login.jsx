@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AppContext } from "./context/Context"; // Adjust the import path as necessary
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+const {formData, setFormData}= useContext(AppContext).value
   const navigate = useNavigate(); // Use navigate for redirection
 
   const [message, setMessage] = useState("");
