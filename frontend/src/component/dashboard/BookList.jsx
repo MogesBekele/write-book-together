@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
 import { toast } from "react-toastify"; 
-import { AppContext } from "../context/Context"; // Adjust the import path as necessary
+import { AppContext } from "../context/Context";
 
 const BookList = () => {
   const { books, setBooks, error, setError } = useContext(AppContext).value;
