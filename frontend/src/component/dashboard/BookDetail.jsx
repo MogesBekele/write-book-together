@@ -10,7 +10,7 @@ const BookDetail = () => {
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
-  const [loading, setLoading] = useState(true); // State to track loading
+  const [loading, setLoading] = useState(true);
 
   const fetchBook = async () => {
     console.log("fetchBook called"); // Debug log
