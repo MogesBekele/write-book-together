@@ -23,7 +23,7 @@ const BookList = () => {
     } catch (err) {
       console.error("Failed to fetch books:", err);
       setError(err.response?.data?.message || "Failed to load books.");
-      toast.error(err.response?.data?.message || "Failed to load books."); // Show error toast
+      toast.error(err.response?.data?.message || "Failed to load books."); 
     } finally {
       setLoading(false);
     }
