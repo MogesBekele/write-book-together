@@ -11,6 +11,9 @@ export const AppProvider = (Props) => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
   const [expandedBooks, setExpandedBooks] = useState({}); // Track expanded state for each book
+   const [book, setBook] = useState(null); // State to store book details
+   
+   
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +39,8 @@ export const AppProvider = (Props) => {
     setExpandedBooks,
     formData,
     setFormData,
+    book,
+    setBook,
   };
 
   return (
