@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loading from "../Loading"; // Import the Loading component
+import { useContext } from "react";
+import { AppContext } from "../context/Context";
 
 const GetAllBook = () => {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [expandedBooks, setExpandedBooks] = useState({}); // Track expanded state for each book
+const { books, setBooks, expandedBooks, setExpandedBooks } = useContext(AppContext).value; // State to hold books
   const toastShown = useRef(false); // Ref to track if toast has been shown
+  const [loading, setLoading] = useState(true);
 
   // Fetch books function
   const fetchBooks = async () => {
