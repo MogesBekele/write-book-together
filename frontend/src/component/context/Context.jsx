@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ( Props ) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [contribution, setContribution] = useState(""); // State for contribution text
@@ -26,10 +26,11 @@ export const AppProvider = ({ children }) => {
     setBooks,
     error,
     setError,
-    
   };
 
   return (
-    <AppContext.Provider value={{ value }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ value }}>
+      {Props.children}
+    </AppContext.Provider>
   );
 };
