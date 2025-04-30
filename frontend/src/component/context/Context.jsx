@@ -22,8 +22,7 @@ export const AppProvider = ({ children }) => {
     loading,
     setLoading,
     error,
-    setError,
-    
+    setError
   };
 
   return (
