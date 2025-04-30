@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../context/Context"; // Adjust the import path as necessary
 
 const Contribution = ({ bookId, onNewContribution }) => {
-const {setContribution, setLoading, loading, contribution}=  useContext(AppContext).value
+const {contribution, setContribution, loading,setLoading,  }=  useContext(AppContext).value
   const handleContributionSubmit = async (e) => {
     e.preventDefault();
     if (!contribution.trim()) {
