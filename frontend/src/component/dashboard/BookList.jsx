@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
 import { toast } from "react-toastify"; // Import toast
+import { AppContext } from "../context/Context"; // Import context
+
 
 const BookList = () => {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { books, setBooks, loading, setLoading, error, setError } = useContext(AppContext); // Use context to manage state
+
   const navigate = useNavigate(); // Use navigate for routing
 
   const fetchBooks = async () => {
