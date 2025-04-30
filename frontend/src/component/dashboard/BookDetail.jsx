@@ -1,14 +1,15 @@
-import React, { useEffect, useContext} from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
 import Contribution from "./Contribution"; // Import the Contribution component
-import { AppContext } from "../context/Context"; // Adjust the import path as necessary
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
   const navigate = useNavigate();
-const { setBook, book, loading, setLoading, error, setError } = useContext(AppContext).value; // Adjust the import path as necessary
+  const [book, setBook] = useState(null); // State to store book details
+  const [loading, setLoading] = useState(true); // State to track loading
+  const [error, setError] = useState(null); // State to handle errors
   const fetchBook = async () => {
     console.log("fetchBook called"); // Debug log
     const token = localStorage.getItem("token");
@@ -20,7 +21,7 @@ const { setBook, book, loading, setLoading, error, setError } = useContext(AppCo
     }
   
     try {
-      setLoading(true); // Set loading state
+      
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
