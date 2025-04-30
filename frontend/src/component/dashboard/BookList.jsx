@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../context/Context"; // Adjust the import path as necessary
 
 const BookList = () => {
-  const { books, setBooks, error, setError } = useContext(AppContext).value; // Adjust the import path as necessary
+  const { books, setBooks, error, setError } = useContext(AppContext).value;
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate(); // Use navigate for routing
 
