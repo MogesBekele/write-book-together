@@ -8,6 +8,7 @@ export const AppProvider = (Props) => {
   const [contribution, setContribution] = useState(""); // State for contribution text
   const [loading, setLoading] = useState(false); // Loading state
   const [books, setBooks] = useState([]);
+  const [book, setBook] = useState(null); // State to store book details
   const [error, setError] = useState(null);
   const [expandedBooks, setExpandedBooks] = useState({}); // Track expanded state for each book
   const [formData, setFormData] = useState({
@@ -35,6 +36,8 @@ export const AppProvider = (Props) => {
     setExpandedBooks,
     formData,
     setFormData,
+    book,
+    setBook,
   };
 
   return (
