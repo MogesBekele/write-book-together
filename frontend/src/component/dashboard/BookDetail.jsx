@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
@@ -8,27 +8,26 @@ import { AppContext } from "../context/Context"; // Adjust the import path as ne
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
   const navigate = useNavigate();
-  const {book, setBook, error, setError}= useContext(AppContext).value
+  const { book, setBook, error, setError, token } = useContext(AppContext).value;
   const [loading, setLoading] = useState(true); // State to track loading
 
   const fetchBook = async () => {
     console.log("fetchBook called"); // Debug log
-    const token = localStorage.getItem("token");
   
+
     if (!token) {
       setError("You are not logged in. Please log in.");
       navigate("/login");
       return;
     }
-  
-    try {
 
+    try {
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       console.log("Fetched Book Data:", res.data); // Debug log
       setBook(res.data);
       setError(null);
@@ -78,43 +77,43 @@ const BookDetail = () => {
         Contributions
       </h2>
       {book.contributions?.length > 0 ? (
-  book.contributions.map((contribution, index) => (
-    <div
-      key={index}
-      className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
-        index % 2 === 0 ? "bg-white" : "bg-gray-100"
-      }`}
-    >
-      <div
-        className={`flex ${
-          index % 2 === 0 ? "justify-start" : "justify-end"
-        } items-center mb-2`}
-      >
-        <span
-          className={`inline-block font-semibold px-2 py-1 rounded-full ${
-            index % 2 === 0
-              ? "bg-blue-100 text-blue-700"
-              : "bg-green-100 text-green-700"
-          }`}
-        >
-          {contribution.contributor?.name || "Unknown"}
-        </span>
-        <span className="text-sm text-gray-400 ml-4">
-          {new Date(contribution.date).toLocaleDateString()}
-        </span>
-      </div>
-      <p
-        className={`text-gray-800 text-lg font-medium ${
-          index % 2 === 0 ? "text-left" : "text-right"
-        }`}
-      >
-        {contribution.text}
-      </p>
-    </div>
-  ))
-) : (
-  <p className="text-gray-500">No contributions yet.</p>
-)}
+        book.contributions.map((contribution, index) => (
+          <div
+            key={index}
+            className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
+              index % 2 === 0 ? "bg-white" : "bg-gray-100"
+            }`}
+          >
+            <div
+              className={`flex ${
+                index % 2 === 0 ? "justify-start" : "justify-end"
+              } items-center mb-2`}
+            >
+              <span
+                className={`inline-block font-semibold px-2 py-1 rounded-full ${
+                  index % 2 === 0
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-green-100 text-green-700"
+                }`}
+              >
+                {contribution.contributor?.name || "Unknown"}
+              </span>
+              <span className="text-sm text-gray-400 ml-4">
+                {new Date(contribution.date).toLocaleDateString()}
+              </span>
+            </div>
+            <p
+              className={`text-gray-800 text-lg font-medium ${
+                index % 2 === 0 ? "text-left" : "text-right"
+              }`}
+            >
+              {contribution.text}
+            </p>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">No contributions yet.</p>
+      )}
 
       {/* Add Contribution Component */}
       <Contribution bookId={bookId} onNewContribution={addNewContribution} />
