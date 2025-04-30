@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 import { AppContext } from "../context/Context";
 
 const BookList = () => {
-  const { books, setBooks, error, setError } = useContext(AppContext).value;
-  const [loading, setLoading] = useState(true);
+  const { books, setBooks, error, setError, loading, setLoading } = useContext(AppContext).value;
+ 
   const navigate = useNavigate(); // Use navigate for routing
 
   const fetchBooks = async () => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
       const res = await axios.get("http://localhost:4000/api/book", {
         headers: {
