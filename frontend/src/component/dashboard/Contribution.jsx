@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AppContext } from "../context/Context"; // Adjust the import path as necessary
 
 const Contribution = ({ bookId, onNewContribution }) => {
-  const [contribution, setContribution] = useState(""); // State for contribution text
-  const [loading, setLoading] = useState(false); // Loading state
+const {setContribution, setLoading, loading, contribution}=  useContext(AppContext).value
   const handleContributionSubmit = async (e) => {
     e.preventDefault();
     if (!contribution.trim()) {

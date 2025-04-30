@@ -6,8 +6,9 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [contribution, setContribution] = useState(""); // State for contribution text
+  const [loading, setLoading] = useState(false); // Loading state
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token"); // or use context
 
@@ -17,12 +18,15 @@ export const AppProvider = ({ children }) => {
     description,
     setDescription,
     token,
-    books,
-    setBooks,
+    contribution,
+    setContribution,
     loading,
     setLoading,
+    books,
+    setBooks,
     error,
-    setError
+    setError,
+    
   };
 
   return (
