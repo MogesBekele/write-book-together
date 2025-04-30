@@ -6,9 +6,9 @@ import { useContext } from "react";
 import { AppContext } from "../context/Context";
 
 const GetAllBook = () => {
-const { books, setBooks, expandedBooks, setExpandedBooks } = useContext(AppContext).value; // State to hold books
+const { books, setBooks, expandedBooks, setExpandedBooks, loading, setLoading } = useContext(AppContext).value; // State to hold books
   const toastShown = useRef(false); // Ref to track if toast has been shown
-  const [loading, setLoading] = useState(true);
+
 
   // Fetch books function
   const fetchBooks = async () => {
