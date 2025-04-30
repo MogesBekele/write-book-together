@@ -10,7 +10,7 @@ const BookDetail = () => {
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
-  const [loading, setLoading] = useState(false); // State to track loading
+  const [loading, setLoading] = useState(true); // State to track loading
 
   const fetchBook = async () => {
     console.log("fetchBook called"); // Debug log
@@ -22,7 +22,6 @@ const BookDetail = () => {
     }
 
     try {
-      setLoading(true); // Set loading to true when starting to fetch data
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
