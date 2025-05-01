@@ -1,20 +1,26 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Loading from "../Loading"; 
+import Loading from "../Loading";
 import { useContext } from "react";
 import { AppContext } from "../context/Context";
 
 const GetAllBook = () => {
-const { books, setBooks, expandedBooks, setExpandedBooks, loading, setLoading } = useContext(AppContext).value; 
+  const {
+    books,
+    setBooks,
+    expandedBooks,
+    setExpandedBooks,
+    loading,
+    setLoading,
+  } = useContext(AppContext).value;
   const toastShown = useRef(false); // Ref to track if toast has been shown
-
 
   // Fetch books function
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+
       const res = await axios.get("http://localhost:4000/api/book", {
         headers: {
           Authorization: `Bearer ${token}`, // Add Authorization header
