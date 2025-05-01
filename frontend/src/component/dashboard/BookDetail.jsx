@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
 import Contribution from "./Contribution"; // Import the Contribution component
-import { AppContext } from "../context/Context"; 
+import { AppContext } from "../context/Context";
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
@@ -102,9 +102,7 @@ const BookDetail = () => {
                 {new Date(contribution.date).toLocaleDateString()}
               </span>
             </div>
-            <p
-              className='text-gray-800 text-lg font-medium'
-            >
+            <p className="text-gray-800 text-lg font-medium">
               {contribution.text}
             </p>
           </div>
