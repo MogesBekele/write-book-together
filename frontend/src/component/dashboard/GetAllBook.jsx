@@ -13,7 +13,7 @@ const GetAllBook = () => {
     setExpandedBooks,
     loading,
     setLoading,
-    token, // Get the token from context
+    token
   } = useContext(AppContext).value;
   const toastShown = useRef(false); // Ref to track if toast has been shown
 
