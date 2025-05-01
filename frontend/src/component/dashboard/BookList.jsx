@@ -48,11 +48,11 @@ const BookList = () => {
     );
 
   return (
-    <div className="p-16 bg-gray-50 min-h-screen">
-      <h1 className="text-6xl font-extrabold text-blue-700 mb-8 text-center">
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h1 className=" text-4xl sm:text-6xl font-extrabold text-blue-700 mb-8 text-center">
         Book Titles
       </h1>
-      <h6 className="text-3xl font-semibold text-gray-700 mb-12 text-center">
+      <h6 className=" text-2xl sm:text-3xl font-semibold text-gray-700 mb-12 text-center">
         Discover a variety of niches and share your expertise to inspire others.
       </h6>
 
