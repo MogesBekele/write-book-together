@@ -43,7 +43,7 @@ const {contribution, setContribution, loading,setLoading,  }=  useContext(AppCon
     <div>
       <form
         onSubmit={handleContributionSubmit}
-        className="mb-12 max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6"
+        className="mb-12 max-w-3xl mx-auto bg-white shadow-md rounded-lg sm:p-6 p-2"
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Add Your Contribution

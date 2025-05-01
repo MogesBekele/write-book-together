@@ -26,7 +26,7 @@ const Dashboard = () => {
                 : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
             }
           >
-            Get All Books
+            All Books
           </NavLink>
           <NavLink
             to="booklist"
