@@ -103,7 +103,7 @@ const BookDetail = () => {
               </span>
             </div>
             <p
-              className={`text-gray-800 text-lg font-medium`}
+              className='text-gray-800 text-lg font-medium'
             >
               {contribution.text}
             </p>
