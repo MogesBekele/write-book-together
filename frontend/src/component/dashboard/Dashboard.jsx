@@ -42,7 +42,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-3/4 p-6">
+      <div className="p-6 w-full sm:w-3/4">
         <Outlet /> {/* This renders the nested routes */}
       </div>
     </div>
