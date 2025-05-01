@@ -12,7 +12,7 @@ const Dashboard = () => {
             className={({ isActive }) =>
               isActive
                 ? "block bg-blue-600 text-white py-2 px-4 rounded-md"
-                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 bg-gray-200"
             }
           >
             Add Books
@@ -22,8 +22,8 @@ const Dashboard = () => {
             to="get-all-books"
             className={({ isActive }) =>
               isActive
-                ? "block bg-purple-600 text-white py-2 px-4 rounded-md"
-                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+                ? "block bg-blue-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md bg-gray-200  hover:bg-gray-300"
             }
           >
             All Books
@@ -32,8 +32,8 @@ const Dashboard = () => {
             to="booklist"
             className={({ isActive }) =>
               isActive
-                ? "block bg-purple-600 text-white py-2 px-4 rounded-md"
-                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-200"
+                ? "block bg-blue-600 text-white py-2 px-4 rounded-md"
+                : "block text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 bg-gray-200"
             }
           >
             Book List
