@@ -79,7 +79,7 @@ const { books, setBooks, expandedBooks, setExpandedBooks, loading, setLoading } 
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-50 p-4 ">
       <h2 className="text-4xl font-bold text-center text-blue-700 mb-10">
         All Books
       </h2>
