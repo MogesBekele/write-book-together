@@ -67,10 +67,10 @@ const GetAllBook = () => {
   // useEffect to call fetchBooks
   useEffect(() => {
     fetchBooks();
-  }, []); // Empty dependency array ensures this runs only once
+  }, []); 
 
   if (loading) {
-    return <Loading />; // Replace with the Loading component
+    return <Loading />;
   }
 
   if (!books.length) {
