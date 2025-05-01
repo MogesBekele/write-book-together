@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div className="min-h-screen sm:flex flex-row bg-gray-100">
       {/* Sidebar */}
       <div className="sm:w-1/4 bg-white shadow-lg p-6 w-full ">
-        <nav className="space-y-4 sm:flex-row sm:items-center flex-col">
+        <nav className="space-y-4 sm:items-center flex-col">
           <NavLink
             to="books"
             className={({ isActive }) =>
