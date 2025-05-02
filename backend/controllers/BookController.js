@@ -116,23 +116,7 @@ export const getContributions = async (req, res) => {
 };
 
 // DELETE /api/contributions/:id
-router.delete("/:id", authMiddleware, async (req, res) => {
-  try {
-    const contribution = await Contribution.findById(req.params.id);
-    if (!contribution) {
-      return res.status(404).json({ message: "Contribution not found" });
-    }
 
-    if (contribution.user.toString() !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
-
-    await contribution.remove();
-    res.json({ message: "Contribution deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 export const deleteContribution = async (req, res) => {
   const { bookId, contributionId } = req.params;
