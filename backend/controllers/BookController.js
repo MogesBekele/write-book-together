@@ -146,3 +146,34 @@ export const deleteContribution = async (req, res) => {
     res.status(500).json({ message: "Failed to delete contribution." });
   }
 };
+export const editContribution = async (req, res) => {
+  const { bookId, contributionId } = req.params;
+  const { text } = req.body;
+
+  try {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    const contribution = book.contributions.id(contributionId);
+
+    if (!contribution) {
+      return res.status(404).json({ message: "Contribution not found." });
+    }
+
+    // Optional: check if the user is the owner
+    // if (contribution.user.toString() !== req.user.id) {
+    //   return res.status(403).json({ message: "Not authorized to edit this contribution." });
+    // }
+
+    contribution.text = text;
+    await book.save();
+
+    res.status(200).json({ message: "Contribution updated successfully.", contribution });
+  } catch (error) {
+    console.error("Error updating contribution:", error);
+    res.status(500).json({ message: "Failed to update contribution." });
+  }
+};

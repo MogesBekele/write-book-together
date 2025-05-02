@@ -18,5 +18,9 @@ router.get("/:bookId", VerifyToken, getBookById); // Get a book by ID
 // Contribution Routes
 router.post("/:bookId/contributions", VerifyToken, addContribution); // Add a contribution to a book
 router.get("/:bookId/contributions", VerifyToken, getContributions); // Get contributions for a book
+// bookRoutes.js or similar
+router.put('/:bookId/contributions/:contributionId', authMiddleware, editContribution);
+router.delete('/:bookId/contributions/:contributionId', authMiddleware, deleteContribution);
+
 
 export default router;
