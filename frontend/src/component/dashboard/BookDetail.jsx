@@ -1,89 +1,120 @@
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { useState } from "react";
+import Loading from "../Loading";
+import Contribution from "./Contribution"; // Import the Contribution component
+import { AppContext } from "../context/Context";
 
-const BookDetail = ({ book }) => {
-  const [bookData, setBookData] = useState(book);
+const BookDetail = () => {
+  const { bookId } = useParams(); // Extract bookId from the URL
+  const navigate = useNavigate();
+  const { book, setBook, error, setError, token } =
+    useContext(AppContext).value;
+  const [loading, setLoading] = useState(true);
 
-  const handleDeleteContribution = async (contributionId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.delete(
-        `http://localhost:4000/api/book/${bookData._id}/contributions/${contributionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Contribution deleted successfully!");
-      setBookData((prev) => ({
-        ...prev,
-        contributions: prev.contributions.filter((c) => c._id !== contributionId),
-      }));
-    } catch (error) {
-      toast.error("Failed to delete contribution.");
-    }
-  };
+  const fetchBook = async () => {
+    console.log("fetchBook called"); // Debug log
 
-  const handleEditContribution = async (contributionId, oldText) => {
-    const newText = prompt("Edit your contribution:", oldText);
-    if (!newText || newText.trim() === "") {
-      toast.warning("Contribution cannot be empty.");
+    if (!token) {
+      setError("You are not logged in. Please log in.");
+      navigate("/login");
       return;
     }
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.put(
-        `http://localhost:4000/api/book/${bookData._id}/contributions/${contributionId}`,
-        { text: newText },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Contribution updated successfully!");
-      setBookData((prev) => ({
-        ...prev,
-        contributions: prev.contributions.map((c) =>
-          c._id === contributionId ? res.data.contribution : c
-        ),
-      }));
-    } catch (error) {
-      toast.error("Failed to update contribution.");
+      const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Fetched Book Data:", res.data); // Debug log
+      setBook(res.data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch book:", err);
+      if (err.response?.status === 401) {
+        setError("You are not authorized. Please log in.");
+        navigate("/login");
+      } else {
+        setError(err.response?.data?.message || "Failed to load book details.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Add a new contribution to the list
+  const addNewContribution = (newContribution) => {
+    setBook((prevBook) => ({
+      ...prevBook,
+      contributions: [...prevBook.contributions, newContribution], // Add new contribution to the end
+    }));
+  };
+
+  // useEffect to call fetchBook
+  useEffect(() => {
+    fetchBook();
+  }, [bookId]);
+
+  if (loading) {
+    return <Loading />; // Replace with the Loading component
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-red-500 font-medium text-lg">{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg sm:p-6 p-2 mb-12">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-        {bookData.title}
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-10 mb-72">
+      <h1 className="text-4xl font-bold text-blue-700 mb-6">{book.title}</h1>
+      <p className="text-gray-700 mb-4">{book.description}</p>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Contributions
       </h2>
-      <p className="text-lg text-gray-700 mb-4">{bookData.description}</p>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">Contributions</h3>
-      {bookData.contributions.length === 0 ? (
-        <p>No contributions yet.</p>
-      ) : (
-        bookData.contributions.map((contribution) => (
-          <div key={contribution._id} className="mb-4 p-4 border rounded-md">
-            <p>{contribution.text}</p>
-            <button
-              onClick={() => handleEditContribution(contribution._id, contribution.text)}
-              className="text-blue-500 hover:underline mr-2"
+      {book.contributions?.length > 0 ? (
+        book.contributions.map((contribution, index) => (
+          <div
+            key={index}
+            className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
+              index % 2 === 0 ? "bg-white" : "bg-gray-100"
+            }`}
+          >
+            <div
+              className={`flex ${
+                index % 2 === 0 ? "justify-start" : "justify-end"
+              } items-center mb-2`}
             >
-              Edit
-            </button>
-            <button
-              onClick={() => handleDeleteContribution(contribution._id)}
-              className="text-red-500 hover:underline"
-            >
-              Delete
-            </button>
+              <span
+                className={`inline-block font-semibold px-2 py-1 rounded-full ${
+                  index % 2 === 0
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-green-100 text-green-700"
+                }`}
+              >
+                {contribution.contributor?.name || "Unknown"}
+              </span>
+              <span className="text-sm text-gray-400 ml-4">
+                {new Date(contribution.date).toLocaleDateString()}
+              </span>
+            </div>
+            <p className="text-gray-800 text-lg font-medium">
+              {contribution.text}
+            </p>
           </div>
         ))
+      ) : (
+        <p className="text-gray-500">No contributions yet.</p>
       )}
+
+      {/* Add Contribution Component */}
+      <Contribution bookId={bookId} onNewContribution={addNewContribution} />
     </div>
   );
-}
+};
+
 export default BookDetail;
