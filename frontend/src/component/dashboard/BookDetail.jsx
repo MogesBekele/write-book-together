@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "../Loading";
 import Contribution from "./Contribution"; // Import the Contribution component
 import { AppContext } from "../context/Context";
+import { FaEdit, FaTrashAlt, FaSave } from "react-icons/fa"; // Import icons from react-icons
 
 const BookDetail = () => {
   const { bookId } = useParams(); // Extract bookId from the URL
@@ -56,7 +57,7 @@ const BookDetail = () => {
   const editContribution = (index, updatedText) => {
     setBook((prevBook) => {
       const updatedContributions = prevBook.contributions.map((contribution, i) =>
-        i === index ? { ...contribution, text: updatedText } : contribution
+        i === index ? { ...contribution, text: updatedText, isEditing: false } : contribution
       );
       return { ...prevBook, contributions: updatedContributions };
     });
@@ -123,18 +124,31 @@ const BookDetail = () => {
             <div className="text-gray-800 text-lg font-medium">
               {/* Editable Text */}
               {contribution.isEditing ? (
-                <textarea
-                  className="w-full p-2 border border-gray-300 rounded"
-                  defaultValue={contribution.text}
-                  onBlur={(e) => {
-                    editContribution(index, e.target.value);
-                  }}
-                />
+                <>
+                  <textarea
+                    className="w-full p-2 border border-gray-300 rounded"
+                    defaultValue={contribution.text}
+                    onChange={(e) => {
+                      setBook((prevBook) => {
+                        const updatedContributions = prevBook.contributions.map((contrib, i) =>
+                          i === index ? { ...contrib, text: e.target.value } : contrib
+                        );
+                        return { ...prevBook, contributions: updatedContributions };
+                      });
+                    }}
+                  />
+                  <button
+                    onClick={() => editContribution(index, contribution.text)}
+                    className="mt-2 text-green-600"
+                  >
+                    <FaSave /> Save {/* Save Button */}
+                  </button>
+                </>
               ) : (
                 <p>{contribution.text}</p>
               )}
             </div>
-            {/* Edit Button */}
+            {/* Edit Button with React Icon */}
             <button
               onClick={() => {
                 setBook((prevBook) => {
@@ -147,14 +161,14 @@ const BookDetail = () => {
               }}
               className="mt-2 text-blue-600 mr-2"
             >
-              {contribution.isEditing ? "Save" : "Edit"}
+              <FaEdit /> {/* Edit Icon */}
             </button>
-            {/* Delete Button */}
+            {/* Delete Button with React Icon */}
             <button
               onClick={() => deleteContribution(index)}
               className="mt-2 text-red-600"
             >
-              Delete
+              <FaTrashAlt /> {/* Trash Icon */}
             </button>
           </div>
         ))
