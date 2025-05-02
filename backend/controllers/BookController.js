@@ -117,7 +117,6 @@ export const getContributions = async (req, res) => {
 
 // DELETE /api/contributions/:id
 
-
 export const deleteContribution = async (req, res) => {
   const { bookId, contributionId } = req.params;
 
