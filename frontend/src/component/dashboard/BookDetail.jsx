@@ -84,7 +84,7 @@ const BookDetail = () => {
         }
       );
 
-    
+      // Update state with the new text
       setBook((prevBook) => {
         const updatedContributions = prevBook.contributions.map((contribution, i) =>
           i === index ? { ...contribution, text: updatedText, isEditing: false } : contribution
