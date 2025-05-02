@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
-import Contribution from "./Contribution";
+import Contribution from "./Contribution"; // Import the Contribution component
 import { AppContext } from "../context/Context";
-import { toast } from "react-toastify";
 
 const BookDetail = () => {
-  const { bookId } = useParams();
+  const { bookId } = useParams(); // Extract bookId from the URL
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
   const [loading, setLoading] = useState(true);
 
   const fetchBook = async () => {
+    console.log("fetchBook called"); // Debug log
+
     if (!token) {
       setError("You are not logged in. Please log in.");
       navigate("/login");
@@ -22,8 +23,12 @@ const BookDetail = () => {
 
     try {
       const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      console.log("Fetched Book Data:", res.data); // Debug log
       setBook(res.data);
       setError(null);
     } catch (err) {
@@ -39,67 +44,42 @@ const BookDetail = () => {
     }
   };
 
+  // Add a new contribution to the list
   const addNewContribution = (newContribution) => {
     setBook((prevBook) => ({
       ...prevBook,
-      contributions: [...prevBook.contributions, newContribution],
+      contributions: [...prevBook.contributions, newContribution], // Add new contribution to the end
     }));
   };
 
-  const handleDelete = async (contributionId) => {
-    try {
-      await axios.delete(
-        `http://localhost:4000/api/book/${bookId}/contributions/${contributionId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+  // Edit an existing contribution
+  const editContribution = (index, updatedText) => {
+    setBook((prevBook) => {
+      const updatedContributions = prevBook.contributions.map((contribution, i) =>
+        i === index ? { ...contribution, text: updatedText } : contribution
       );
-      setBook((prevBook) => ({
-        ...prevBook,
-        contributions: prevBook.contributions.filter(
-          (c) => c._id !== contributionId
-        ),
-      }));
-      toast.success("Contribution deleted successfully.");
-    } catch (error) {
-      toast.error("Failed to delete contribution.");
-    }
+      return { ...prevBook, contributions: updatedContributions };
+    });
   };
 
-  const handleEdit = async (contributionId, currentText) => {
-    const newText = prompt("Edit your contribution:", currentText);
-    if (!newText || newText.trim() === "") {
-      toast.warning("Contribution cannot be empty.");
-      return;
-    }
-
-    try {
-      const res = await axios.put(
-        `http://localhost:4000/api/book/${bookId}/contributions/${contributionId}`,
-        { text: newText },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+  // Delete a contribution
+  const deleteContribution = (index) => {
+    setBook((prevBook) => {
+      const updatedContributions = prevBook.contributions.filter(
+        (contribution, i) => i !== index
       );
-      const updatedContribution = res.data.contribution;
-
-      setBook((prevBook) => ({
-        ...prevBook,
-        contributions: prevBook.contributions.map((c) =>
-          c._id === contributionId ? updatedContribution : c
-        ),
-      }));
-      toast.success("Contribution updated successfully.");
-    } catch (error) {
-      toast.error("Failed to update contribution.");
-    }
+      return { ...prevBook, contributions: updatedContributions };
+    });
   };
 
+  // useEffect to call fetchBook
   useEffect(() => {
     fetchBook();
   }, [bookId]);
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return <Loading />; // Replace with the Loading component
+  }
 
   if (error) {
     return (
@@ -114,11 +94,10 @@ const BookDetail = () => {
       <h1 className="text-4xl font-bold text-blue-700 mb-6">{book.title}</h1>
       <p className="text-gray-700 mb-4">{book.description}</p>
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contributions</h2>
-
       {book.contributions?.length > 0 ? (
         book.contributions.map((contribution, index) => (
           <div
-            key={contribution._id}
+            key={index}
             className={`mb-6 p-4 shadow-md rounded-lg border border-gray-200 ${
               index % 2 === 0 ? "bg-white" : "bg-gray-100"
             }`}
@@ -141,29 +120,49 @@ const BookDetail = () => {
                 {new Date(contribution.date).toLocaleDateString()}
               </span>
             </div>
-            <p className="text-gray-800 text-lg font-medium mb-2">
-              {contribution.text}
-            </p>
-            <div className="flex space-x-4">
-              <button
-                onClick={() => handleEdit(contribution._id, contribution.text)}
-                className="text-blue-600 hover:underline text-sm"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(contribution._id)}
-                className="text-red-600 hover:underline text-sm"
-              >
-                Delete
-              </button>
+            <div className="text-gray-800 text-lg font-medium">
+              {/* Editable Text */}
+              {contribution.isEditing ? (
+                <textarea
+                  className="w-full p-2 border border-gray-300 rounded"
+                  defaultValue={contribution.text}
+                  onBlur={(e) => {
+                    editContribution(index, e.target.value);
+                  }}
+                />
+              ) : (
+                <p>{contribution.text}</p>
+              )}
             </div>
+            {/* Edit Button */}
+            <button
+              onClick={() => {
+                setBook((prevBook) => {
+                  const updatedContributions = prevBook.contributions.map(
+                    (contrib, i) =>
+                      i === index ? { ...contrib, isEditing: !contrib.isEditing } : contrib
+                  );
+                  return { ...prevBook, contributions: updatedContributions };
+                });
+              }}
+              className="mt-2 text-blue-600 mr-2"
+            >
+              {contribution.isEditing ? "Save" : "Edit"}
+            </button>
+            {/* Delete Button */}
+            <button
+              onClick={() => deleteContribution(index)}
+              className="mt-2 text-red-600"
+            >
+              Delete
+            </button>
           </div>
         ))
       ) : (
         <p className="text-gray-500">No contributions yet.</p>
       )}
 
+      {/* Add Contribution Component */}
       <Contribution bookId={bookId} onNewContribution={addNewContribution} />
     </div>
   );
