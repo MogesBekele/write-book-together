@@ -96,7 +96,7 @@ const BookDetail = () => {
     }
   };
 
- 
+  // Add a new contribution to the list
   const addNewContribution = (newContribution) => {
     setBook((prevBook) => ({
       ...prevBook,
