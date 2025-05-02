@@ -55,6 +55,11 @@ const BookDetail = () => {
 
   // Edit an existing contribution
   const editContribution = (index, updatedText) => {
+    if (updatedText.trim() === "") {
+      deleteContribution(index); // If the updated text is empty, delete the contribution
+      return;
+    }
+
     setBook((prevBook) => {
       const updatedContributions = prevBook.contributions.map((contribution, i) =>
         i === index ? { ...contribution, text: updatedText, isEditing: false } : contribution
