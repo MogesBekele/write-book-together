@@ -39,7 +39,6 @@ export const getAllBooks = async (req, res) => {
   }
 };
 export const getBookById = async (req, res) => {
-
   const { bookId } = req.params;
 
   try {
@@ -113,5 +112,54 @@ export const getContributions = async (req, res) => {
   } catch (error) {
     console.error("Error fetching contributions:", error);
     res.status(500).json({ message: "Failed to fetch contributions." });
+  }
+};
+
+// DELETE /api/contributions/:id
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const contribution = await Contribution.findById(req.params.id);
+    if (!contribution) {
+      return res.status(404).json({ message: "Contribution not found" });
+    }
+
+    if (contribution.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    await contribution.remove();
+    res.json({ message: "Contribution deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+export const deleteContribution = async (req, res) => {
+  const { bookId, contributionId } = req.params;
+
+  try {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found." });
+    }
+
+    // Find the contribution index
+    const contributionIndex = book.contributions.findIndex(
+      (contribution) => contribution._id.toString() === contributionId
+    );
+
+    if (contributionIndex === -1) {
+      return res.status(404).json({ message: "Contribution not found." });
+    }
+
+    // Remove the contribution from the array
+    book.contributions.splice(contributionIndex, 1);
+    await book.save(); // Save the updated book
+
+    res.status(200).json({ message: "Contribution deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting contribution:", error);
+    res.status(500).json({ message: "Failed to delete contribution." });
   }
 };
