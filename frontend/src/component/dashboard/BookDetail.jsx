@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaTrashAlt, FaEdit } from "react-icons/fa"; // Import react-icons
 import Loading from "../Loading";
-import Contribution from "./Contribution"; // Import the Contribution component
+import Contribution from "./Contribution";
 import { AppContext } from "../context/Context";
 
 const BookDetail = () => {
@@ -69,7 +69,7 @@ const BookDetail = () => {
   // Edit contribution
   const editContribution = async (index, updatedText) => {
     if (updatedText.trim() === "") {
-      deleteContribution(index); // If text is empty, delete the contribution
+      deleteContribution(index);
       return;
     }
 
