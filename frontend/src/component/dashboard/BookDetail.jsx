@@ -54,7 +54,7 @@ const BookDetail = () => {
         }
       );
 
-      // Update state to remove the deleted contribution
+    
       setBook((prevBook) => {
         const updatedContributions = prevBook.contributions.filter(
           (contribution, i) => i !== index
