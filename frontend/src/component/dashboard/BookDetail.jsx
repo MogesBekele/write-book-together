@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaTrashAlt, FaEdit } from "react-icons/fa"; // Import react-icons
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import Loading from "../Loading";
-import Contribution from "./Contribution"; // Import the Contribution component
+import Contribution from "./Contribution";
 import { AppContext } from "../context/Context";
 
 const BookDetail = () => {
-  const { bookId } = useParams(); // Extract bookId from the URL
+  const { bookId } = useParams(); 
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
