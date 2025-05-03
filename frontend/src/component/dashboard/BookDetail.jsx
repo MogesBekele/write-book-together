@@ -69,7 +69,7 @@ const BookDetail = () => {
   // Edit contribution
   const editContribution = async (index, updatedText) => {
     if (updatedText.trim() === "") {
-      deleteContribution(index); // If text is empty, delete the contribution
+      deleteContribution(index);
       return;
     }
 
