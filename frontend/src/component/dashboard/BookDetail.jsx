@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaTrashAlt, FaEdit } from "react-icons/fa"; // Import react-icons
 import Loading from "../Loading";
-import Contribution from "./Contribution";
+import Contribution from "./Contribution"; // Import the Contribution component
 import { AppContext } from "../context/Context";
 
 const BookDetail = () => {
-  const { bookId } = useParams(); 
+  const { bookId } = useParams(); // Extract bookId from the URL
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
@@ -54,7 +54,7 @@ const BookDetail = () => {
         }
       );
 
-    
+      // Update state to remove the deleted contribution
       setBook((prevBook) => {
         const updatedContributions = prevBook.contributions.filter(
           (contribution, i) => i !== index
@@ -69,7 +69,7 @@ const BookDetail = () => {
   // Edit contribution
   const editContribution = async (index, updatedText) => {
     if (updatedText.trim() === "") {
-      deleteContribution(index);
+      deleteContribution(index); // If text is empty, delete the contribution
       return;
     }
 
