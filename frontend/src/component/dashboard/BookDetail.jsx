@@ -74,26 +74,37 @@ const BookDetail = () => {
     }
 
     try {
-      const res = await axios.put(
-        `http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}`,
-        { text: updatedText },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res =await axios.put(`http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}, {text: updatedText},{
+        headers:{
+        Authorization: `Bearer ${token}`,
+        }`)
+      
+    } 
+    catch (error) {
+      
+    }
+
+    // try {
+    //   const res = await axios.put(
+    //     `http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}`,
+    //     { text: updatedText },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   );
 
     
-      setBook((prevBook) => {
-        const updatedContributions = prevBook.contributions.map((contribution, i) =>
-          i === index ? { ...contribution, text: updatedText, isEditing: false } : contribution
-        );
-        return { ...prevBook, contributions: updatedContributions };
-      });
-    } catch (err) {
-      setError("Failed to update contribution");
-    }
+    //   setBook((prevBook) => {
+    //     const updatedContributions = prevBook.contributions.map((contribution, i) =>
+    //       i === index ? { ...contribution, text: updatedText, isEditing: false } : contribution
+    //     );
+    //     return { ...prevBook, contributions: updatedContributions };
+    //   });
+    // } catch (err) {
+    //   setError("Failed to update contribution");
+    // }
   };
 
   // Add a new contribution to the list
