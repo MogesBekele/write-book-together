@@ -31,14 +31,12 @@ export const getAllBooks = async (req, res) => {
 
 
   try {
-    const books = await Book.find().populate("createdBy", "username");
-    console.log("books fetched successfully:", books);
+    const Books = await Book.find().populate("createdBy", "username");
+    console.log("books fetched successfully:", book);
     res.status(200).json(books)
 
     
   } catch (error) {
-    console.error('error fetching books:', error)
-    res.status(500).json({message: 'failed to fetch the books'})
     
   }
   // try {
