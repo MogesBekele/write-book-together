@@ -29,13 +29,7 @@ export const addBook = async (req, res) => {
 
 export const getAllBooks = async (req, res) => {
 
-
-  try {
-    const book = await book.find().populate("createdBy",)
-    
-  } catch (error) {
-    
-  }
+  
   // try {
   //   console.log("Fetching all books..."); // Debug log
   //   const books = await Book.find().populate("createdBy", "username");
