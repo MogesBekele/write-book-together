@@ -7,7 +7,7 @@ import Contribution from "./Contribution";
 import { AppContext } from "../context/Context";
 
 const BookDetail = () => {
-  const { bookId } = useParams(); // Extract bookId from the URL
+  const { bookId } = useParams(); 
   const navigate = useNavigate();
   const { book, setBook, error, setError, token } =
     useContext(AppContext).value;
