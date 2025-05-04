@@ -22,25 +22,49 @@ const BookDetail = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(`http://localhost:4000/api/book/${bookId}`,{
+        headers:{Authorization: `Bearer ${token}`
 
-      setBook(res.data);
-      setError(null);
-    } catch (err) {
-      if (err.response?.status === 401) {
-        setError("You are not authorized. Please log in.");
-        navigate("/login");
-      } else {
-        setError(err.response?.data?.message || "Failed to load book details.");
+        }
+      }) 
+      setBook(res.data)
+      setError(null)
+
+      
+    } catch (error) {
+      if (error.response?.status===401){
+        setError('you are not authorised please log in ')
+        navigate('/login')
       }
-    } finally {
-      setLoading(false);
+      else{
+        setError(error.response?.data?.message || 'failed to load details')
+      }
+      finally{
+        setLoading(false)
+      }
     }
-  };
+    }
+
+  //   try {
+  //     const res = await axios.get(`http://localhost:4000/api/book/${bookId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     setBook(res.data);
+  //     setError(null);
+  //   } catch (err) {
+  //     if (err.response?.status === 401) {
+  //       setError("You are not authorized. Please log in.");
+  //       navigate("/login");
+  //     } else {
+  //       setError(err.response?.data?.message || "Failed to load book details.");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Delete contribution
   const deleteContribution = async (index) => {
