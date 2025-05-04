@@ -45,15 +45,15 @@ const BookDetail = () => {
   // Delete contribution
   const deleteContribution = async (index) => {
     try {
-      const res = await axios.delete(`http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id},{
-        headers: {
-          Authorization: `Bearer  ${token}`,
-        },
-
-    
+      const res = await axios.delete(`http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}`,
+        {
+          headers: {
+          Authorization: `Bearer ${token}`,
+        
+        }}
+      )
       
-      })
-    catch (error) {
+    } catch (error) {
       
     }
 
