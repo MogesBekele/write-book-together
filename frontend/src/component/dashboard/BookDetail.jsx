@@ -39,9 +39,9 @@ const BookDetail = () => {
       else{
         setError(error.response?.data?.message || 'failed to load details')
       }
-      finally{
-        setLoading(false)
-      }
+   
+    }   finally{
+      setLoading(false)
     }
     }
 
