@@ -31,10 +31,7 @@ export const getAllBooks = async (req, res) => {
 
 
   try {
-    const Books = await Book.find().populate("createdBy", "username");
-    console.log("books fetched successfully:", book);
-    res.status(200).json(books)
-
+    const book = await book.find().populate("createdBy",)
     
   } catch (error) {
     
