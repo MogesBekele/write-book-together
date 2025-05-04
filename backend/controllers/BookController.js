@@ -28,15 +28,26 @@ export const addBook = async (req, res) => {
 };
 
 export const getAllBooks = async (req, res) => {
+
+
   try {
-    console.log("Fetching all books..."); // Debug log
-    const books = await Book.find().populate("createdBy", "username");
-    console.log("Books fetched successfully:", books); // Debug log
-    res.status(200).json(books);
-  } catch (err) {
-    console.error("Error fetching books:", err); // Debug log
-    res.status(500).json({ message: "Failed to fetch books", error: err });
+    const bodyooks = await Book.find().populate("createdBy", "username");
+    console.log("books fetched successfully:", books);
+    res.status(200).json(Books)
+
+    
+  } catch (error) {
+    
   }
+  // try {
+  //   console.log("Fetching all books..."); // Debug log
+  //   const books = await Book.find().populate("createdBy", "username");
+  //   console.log("Books fetched successfully:", books); // Debug log
+  //   res.status(200).json(books);
+  // } catch (err) {
+  //   console.error("Error fetching books:", err); // Debug log
+  //   res.status(500).json({ message: "Failed to fetch books", error: err });
+  // }
 };
 export const getBookById = async (req, res) => {
   const { bookId } = req.params;
