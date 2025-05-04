@@ -43,28 +43,28 @@ const BookDetail = () => {
   };
 
   // Delete contribution
-  const deleteContribution = async (index) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  // const deleteContribution = async (index) => {
+  //   try {
+  //     const res = await axios.delete(
+  //       `http://localhost:4000/api/book/${bookId}/contributions/${book.contributions[index]._id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      // Update state to remove the deleted contribution
-      setBook((prevBook) => {
-        const updatedContributions = prevBook.contributions.filter(
-          (contribution, i) => i !== index
-        );
-        return { ...prevBook, contributions: updatedContributions };
-      });
-    } catch (err) {
-      setError("Failed to delete contribution");
-    }
-  };
+  //     // Update state to remove the deleted contribution
+  //     setBook((prevBook) => {
+  //       const updatedContributions = prevBook.contributions.filter(
+  //         (contribution, i) => i !== index
+  //       );
+  //       return { ...prevBook, contributions: updatedContributions };
+  //     });
+  //   } catch (err) {
+  //     setError("Failed to delete contribution");
+  //   }
+  // };
 
   // Edit contribution
   const editContribution = async (index, updatedText) => {
