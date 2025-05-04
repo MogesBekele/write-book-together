@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaTrashAlt, FaEdit } from "react-icons/fa"; // Import react-icons
+import { FaTrashAlt, FaEdit } from "react-icons/fa"; 
 import Loading from "../Loading";
 import Contribution from "./Contribution";
 import { AppContext } from "../context/Context";
