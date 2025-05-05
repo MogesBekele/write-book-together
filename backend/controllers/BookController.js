@@ -94,7 +94,7 @@ export const addContribution = async (req, res) => {
   }
 };
 
-// Get contributions for a book
+
 export const getContributions = async (req, res) => {
   const { bookId } = req.params;
 
