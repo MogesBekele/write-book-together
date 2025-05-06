@@ -171,7 +171,9 @@ export const editContribution = async (req, res) => {
     contribution.text = text;
     await book.save();
 
-    res.status(200).json({ message: "Contribution updated successfully.", contribution });
+    res
+      .status(200)
+      .json({ message: "Contribution updated successfully.", contribution });
   } catch (error) {
     console.error("Error updating contribution:", error);
     res.status(500).json({ message: "Failed to update contribution." });
