@@ -5,19 +5,19 @@ export const AppContext = createContext();
 export const AppProvider = (Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contribution, setContribution] = useState(""); 
-  const [loading, setLoading] = useState(false); 
+  const [contribution, setContribution] = useState("");
+  const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
-  const [expandedBooks, setExpandedBooks] = useState({}); 
+  const [expandedBooks, setExpandedBooks] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  
-  const token = localStorage.getItem("token"); 
+
+  const token = localStorage.getItem("token");
 
   const value = {
     title,
