@@ -16,6 +16,7 @@ export const AppProvider = (Props) => {
     email: "",
     password: "",
   });
+  
   const token = localStorage.getItem("token"); 
 
   const value = {
